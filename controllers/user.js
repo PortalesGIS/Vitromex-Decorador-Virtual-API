@@ -1,13 +1,14 @@
 const {response } = require('express') ;
-
+// TODO: lastname
 const userPost = (req,res = response) => {
 
-    const {name,email,password} = req.body;
+    const {name,email,password,lastName} = req.body;
 
     res.json({
         ok:true,
         msg:"user Created",
         name,
+        lastName,
         email,
         password
     })
