@@ -25,16 +25,40 @@ const userPost = async  (req,res = response) => {
 }
 
 
-const userGet = (req,res=response) => {
+const userGet = async(req,res=response) => {
+    const { limit = 5,start=1 } = req.query;
+    const query = {state:true};
+    if(!Number(limit)){
+        return res.status(400).json({
+            ok:false,
+            error:'el -limit y el -start tienen que ser numeros revisa tu peticion'
+        })
+    }
+    if(!Number(start)){
+        return res.status(400).json({
+            ok:false,
+            error:'el -limit y el -start tienen que ser numeros revisa tu peticion'
+        })
+    }
+    const [users,total]= await Promise.all([
+        User.find(query)
+        .skip(Number(start))
+        .limit(Number(limit)),
+        User.countDocuments(query)
+    ])
+
     res.json({
         ok:true,
-        msg:"get API-controlador"
+        total,
+        users
     })
 }
 
-const userDelete = (req,res = response) => {
+const userDelete = async(req,res = response) => {
+    const {id} = req.params;
+    const user = await User.findByIdAndUpdate(id,{state:false})
     res.json({
-        msg:"delete user -controller"
+        user
     })
 }
 
