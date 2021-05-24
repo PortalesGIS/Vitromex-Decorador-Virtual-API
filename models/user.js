@@ -15,7 +15,7 @@ const UserSchema = Schema({
     },
     email:{
         type: 'string',
-        require:[true,"El corro es requerido"],
+        require:[true,"El correo es requerido"],
         unique: true
     },
     password:{
@@ -31,5 +31,10 @@ const UserSchema = Schema({
     }
 });
 
+UserSchema.methods.toJSON = function(){
+    const {__v, password, ...user} = this.toObject();
+    return user;
+
+}
 
 module.exports = model("User",UserSchema);

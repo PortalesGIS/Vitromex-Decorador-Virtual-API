@@ -3,6 +3,7 @@ const {Router} = require('express');
 const { check } = require('express-validator');
 const { userGet, userPost, userDelete } = require('../controllers/user');
 const {validateCampos} = require('../middlewares/validateCampos');
+const {emailExist} = require('../helpers/db-validators')
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.post('/',[
     check("name", "El nombre es requerido").not().isEmpty(),
     check("password", "la contraseña es requerida y mayor a 6 caracteres ").isLength({min:6}),
     check("lastName", "El apellido es requerido").not().isEmpty(),
+    check("email").custom(emailExist),
     validateCampos
 ],userPost)
 // 
