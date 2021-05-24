@@ -9,7 +9,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usersRoutePath ="/api/user";
-
+        this.productsPath = "/api/product"
         // conectar a DB
         this.conectDB()
 
@@ -36,6 +36,7 @@ class Server {
 
     routes(){
         this.app.use(this.usersRoutePath, require("../routes/user"))
+        this.app.use(this.productsPath, require("../routes/product"))
     }
 
     listen(){
