@@ -30,7 +30,8 @@ const login = async(req,res=response) =>{
 
         // generar JWT
         return res.json({
-           ok:true
+           ok:true,
+           user
         })
 
     } catch (error) {
