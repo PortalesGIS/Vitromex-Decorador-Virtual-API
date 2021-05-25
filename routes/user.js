@@ -30,7 +30,8 @@ router.post("/test", (req,res) => {
     res.json({
         body:req.body,
         header: req.params,
-        query:req.query
+        query:req.query,
+        headers:req.headers,
     })
 })
 module.exports =router;
