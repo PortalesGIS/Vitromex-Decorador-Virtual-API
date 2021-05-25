@@ -24,4 +24,13 @@ router.delete('/:id',[
     validateCampos
 ],userDelete)
 
+// 
+
+router.post("/test", (req,res) => {
+    res.json({
+        body:req.body,
+        header: req.params,
+        query:req.query
+    })
+})
 module.exports =router;

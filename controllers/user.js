@@ -13,7 +13,7 @@ const userPost = async  (req,res = response) => {
     user.password = bcryptjs.hashSync(password,salt)
     // 
     try {
-        await user.save();        
+        await user.save();       
         res.json({
             ok:true,
             msg:"user Created",
