@@ -17,10 +17,31 @@ const ProductSchema = Schema({
     sized:{
         type: 'string',
     },
-    abailable:{
+    smallPicture:{
+        type: 'string',
+    },
+    available:{
         type:Boolean,
         default:true
-    }
+    },
+    isNewProduct:{
+        type:Boolean,
+        default:false
+    },
+    family:{
+        type:"string"
+    },
+    branding:{
+        type:"string"
+    },
+    textureHeight:{
+        type: Number,
+    },
+    textureWidth:{
+        type: Number,
+        
+    },
+
 })
 
 module.exports = model("Product",ProductSchema);

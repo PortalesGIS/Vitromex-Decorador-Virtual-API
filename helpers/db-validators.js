@@ -1,4 +1,6 @@
+const Product = require('../models/product');
 const User = require('../models/user')
+
 
 
 const emailExist = async (email = "") =>{
@@ -14,8 +16,15 @@ const exitUserById =async ( id ) => {
         throw new Error(`El id no existe ${id}`);
     }
 }
+const exitProductById =async ( id ) => {
+    const exist = await Product.findById(id);
+    if(!exist){
+        throw new Error(`El producto con el id no existe ${id}`);
+    }
+}
 
 module.exports = {
     emailExist,
-    exitUserById
+    exitUserById,
+    exitProductById
 }
