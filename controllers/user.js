@@ -4,7 +4,7 @@ const User =require('../models/user');
 
 
 const userPost = async  (req,res = response) => {
-
+    
     const {name,email,password,lastName} = req.body;
     const user = new User({name,email,password,lastName}) 
     //

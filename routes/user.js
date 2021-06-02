@@ -27,9 +27,9 @@ router.delete('/:id',[
 // 
 
 router.post("/test", (req,res) => {    
+    
     res.json({
         body:req.body,
-        header: req.params,
         query:req.query,
         headers:req.headers,
     })
