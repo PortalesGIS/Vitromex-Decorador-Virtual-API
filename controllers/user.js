@@ -5,8 +5,8 @@ const User =require('../models/user');
 
 const userPost = async  (req,res = response) => {
     
-    const {name,email,password,lastName} = req.body;
-    const user = new User({name,email,password,lastName}) 
+    const {name,email,password,lastName,country="s",city="s"} = req.body;
+    const user = new User({name,email,password,lastName,country,city}) 
     //
     // encriptadr password
     const salt = bcryptjs.genSaltSync();

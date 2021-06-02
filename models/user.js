@@ -25,6 +25,12 @@ const UserSchema = Schema({
     img:{
         type: 'string',
     },
+    country:{
+        type: 'string',
+    },
+    city:{
+        type: 'string',
+    },
     state:{
         type:Boolean,
         default:true
