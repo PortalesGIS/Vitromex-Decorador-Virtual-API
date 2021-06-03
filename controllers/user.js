@@ -15,7 +15,14 @@ const userPost = async  (req,res = response) => {
     try {
         await user.save();       
         res.json({
-            user
+            state:user.state,
+            favorites:user.favorites,
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            lastName:user.lastName,
+            country:user.country,
+            city:user.city,
         })
     } catch (error) {
         console.log(error)
