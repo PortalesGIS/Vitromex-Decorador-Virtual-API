@@ -15,8 +15,6 @@ const userPost = async  (req,res = response) => {
     try {
         await user.save();       
         res.json({
-            ok:true,
-            msg:"user Created",
             user
         })
     } catch (error) {

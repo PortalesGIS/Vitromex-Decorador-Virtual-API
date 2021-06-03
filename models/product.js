@@ -39,8 +39,10 @@ const ProductSchema = Schema({
     },
     textureWidth:{
         type: Number,
-        
     },
+    typologies:{
+        type:Array,
+    }
 
 })
 

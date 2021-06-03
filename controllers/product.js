@@ -61,7 +61,6 @@ const getProductById = async(req,res = response) => {
     const {id} = req.params;
     const product = await Product.findById(id)
     res.json({
-        ok:true,
         product
     })
 }
