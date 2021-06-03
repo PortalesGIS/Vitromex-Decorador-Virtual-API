@@ -1,4 +1,4 @@
-const { response } = require("express");
+const { response, json } = require("express");
 const Favorite = require("../models/favorite");
 const User = require("../models/user");
 
@@ -52,7 +52,17 @@ const removePointFavorite = async (req,res=response)=>{
     })
 }
 
+const getAllFavoritesUser = async (req,res=response)=>{
+    const {id} = req.params;
+    const favorites  = await User.findById(id);
+    res.json({
+        favorites:favorites.favorites
+    })
+}
+
+
 module.exports ={
     addPointFavorite,
-    removePointFavorite
+    removePointFavorite,
+    getAllFavoritesUser
 }
