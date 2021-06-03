@@ -26,7 +26,6 @@ const productGet =async (req,res = response) => {
     ])
 
     res.json({
-        ok:true,
         AlltotalProducts:total,
         toalProductsInThisQuery:products.length,
         products
@@ -39,7 +38,6 @@ const getProductsArko= async (req,res=response)=>{
         Product.countDocuments(query),
     ]);
     res.json({
-        ok:true,
         toalProductsInThisQuery:total,
         products
     })
@@ -51,7 +49,6 @@ const getProductsVitromex= async (req,res=response)=>{
         Product.countDocuments(query),
     ]);
     res.json({
-        ok:true,
         toalProductsInThisQuery:total,
         products
     })

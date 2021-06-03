@@ -53,7 +53,6 @@ const userGet = async(req,res=response) => {
     ])
 
     res.json({
-        ok:true,
         total,
         users
     })
