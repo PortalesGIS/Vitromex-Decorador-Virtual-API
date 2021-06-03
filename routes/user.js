@@ -26,12 +26,10 @@ router.delete('/:id',[
 
 // 
 
-router.post("/test", (req,res) => {    
+router.get("/test", (req,res) => {    
     
     res.json({
-        body:req.body,
-        query:req.query,
-        headers:req.headers,
+        mensaje:"loquesea"
     })
 })
 module.exports =router;
