@@ -12,8 +12,9 @@ class Server {
         this.productsPath = "/api/product";
         this.authPath = "/api/auth";
         this.adminUsers = "/api/admin";
-        this.favoritePath = "/api/favorite"
-        this.shopPath = "/api/shop"
+        this.favoritePath = "/api/favorite";
+        this.shopPath = "/api/shop";
+        this.counterPath = "/api/counter"
         // conectar a DB
         this.conectDB()
 
@@ -45,6 +46,7 @@ class Server {
         this.app.use(this.adminUsers,require("../routes/admin"))
         this.app.use(this.favoritePath,require("../routes/favorite"))
         this.app.use(this.shopPath,require("../routes/shop"))
+        this.app.use(this.counterPath,require("../routes/counter"))
     }
 
     listen(){
