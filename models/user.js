@@ -34,6 +34,9 @@ const UserSchema = Schema({
     state:{
         type:Boolean,
         default:true
+    },
+    favorites:{
+        type:Array,
     }
 });
 
