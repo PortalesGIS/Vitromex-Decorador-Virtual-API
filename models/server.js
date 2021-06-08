@@ -14,7 +14,8 @@ class Server {
         this.adminUsers = "/api/admin";
         this.favoritePath = "/api/favorite";
         this.shopPath = "/api/shop";
-        this.counterPath = "/api/counter"
+        this.counterPath = "/api/counter";
+        this.onboardingPath = "/api/onboarding";
         // conectar a DB
         this.conectDB()
 
@@ -40,13 +41,14 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.usersRoutePath, require("../routes/user"))
-        this.app.use(this.productsPath, require("../routes/product"))
-        this.app.use(this.authPath, require("../routes/auth"))
-        this.app.use(this.adminUsers,require("../routes/admin"))
-        this.app.use(this.favoritePath,require("../routes/favorite"))
-        this.app.use(this.shopPath,require("../routes/shop"))
-        this.app.use(this.counterPath,require("../routes/counter"))
+        this.app.use(this.usersRoutePath, require("../routes/user"));
+        this.app.use(this.productsPath, require("../routes/product"));
+        this.app.use(this.authPath, require("../routes/auth"));
+        this.app.use(this.adminUsers,require("../routes/admin"));
+        this.app.use(this.favoritePath,require("../routes/favorite"));
+        this.app.use(this.shopPath,require("../routes/shop"));
+        this.app.use(this.counterPath,require("../routes/counter"));
+        this.app.use(this.onboardingPath,require("../routes/onboarding"));;
     }
 
     listen(){

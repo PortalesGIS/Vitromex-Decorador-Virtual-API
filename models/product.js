@@ -48,6 +48,9 @@ const ProductSchema = Schema({
     },
     finish:{
         type:"string",
+    },
+    aplications:{
+        type:Array,
     }
 
 })
