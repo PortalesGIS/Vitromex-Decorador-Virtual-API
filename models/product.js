@@ -41,7 +41,13 @@ const ProductSchema = Schema({
         type: Number,
     },
     typologies:{
-        type:Array,
+        type:"string",
+    },
+    color:{
+        type:"string",
+    },
+    finish:{
+        type:"string",
     }
 
 })
