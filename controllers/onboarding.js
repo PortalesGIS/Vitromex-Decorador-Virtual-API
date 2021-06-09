@@ -1,6 +1,5 @@
 const { response } = require("express");
 const Aplications = require("../models/aplications");
-const typologies = require("../models/typologies");
 const Typologies = require("../models/typologies");
 
 
@@ -13,11 +12,11 @@ const getAllAplications =async (req,res = response) => {
 }
 
 const getAllTypologies =async (req,res = response) => {
-    const aplications =await Typologies.find();
-    const total = await typologies.count();
+    const typologies =await Typologies.find();
+    const total = await Typologies.count();
     res.json({
         total,
-        aplications
+        typologies
     })
 }
 
