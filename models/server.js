@@ -2,7 +2,9 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
+const {getDB,ActualizarDB} = require('../Agenda/getDB')
 
+   
 class Server {
 
     constructor(){
@@ -16,17 +18,25 @@ class Server {
         this.shopPath = "/api/shop";
         this.counterPath = "/api/counter";
         this.onboardingPath = "/api/onboarding";
+        // router testing
+        this.testPath = "/api/test";
+
+        // 
         // conectar a DB
         this.conectDB()
-
+        
         // middlewares
         this.middlewares();
         // rutas de app
         this.routes();
+        
     }
 
     async conectDB(){
         await dbConnection()
+       // actualizar DB servicio de oracle
+        // getDB.start();
+        ActualizarDB();
     }
 
     middlewares(){
@@ -38,9 +48,12 @@ class Server {
         this.app.use(express.json());
         // directorio publico
         this.app.use(express.static("public"))
+        // 
+        
     }
 
     routes(){
+        console.log("routes")
         this.app.use(this.usersRoutePath, require("../routes/user"));
         this.app.use(this.productsPath, require("../routes/product"));
         this.app.use(this.authPath, require("../routes/auth"));
@@ -48,7 +61,8 @@ class Server {
         this.app.use(this.favoritePath,require("../routes/favorite"));
         this.app.use(this.shopPath,require("../routes/shop"));
         this.app.use(this.counterPath,require("../routes/counter"));
-        this.app.use(this.onboardingPath,require("../routes/onboarding"));;
+        this.app.use(this.onboardingPath,require("../routes/onboarding"));
+        this.app.use(this.testPath,require("../routes/test"));
     }
 
     listen(){

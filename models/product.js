@@ -51,9 +51,16 @@ const ProductSchema = Schema({
     },
     aplications:{
         type:Array,
+    },
+    idFromOracle:{
+        type:"string",
     }
-
 })
+ProductSchema.methods.toJSON = function(){
+    const {idFromOracle, ...prod} = this.toObject();
+    return prod;
+
+}
 
 
 module.exports = model("Product",ProductSchema);
