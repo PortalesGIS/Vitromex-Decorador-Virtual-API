@@ -9,7 +9,6 @@ const getDB = cron.schedule('* * * * * 5', () => {
 
   const ActualizarDB = async() => {
       console.log("empieza a actualizar la DB");
-      let totalAddProducts = 0;
       fetch("http://localhost:8080/api/test/db",{
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -17,21 +16,22 @@ const getDB = cron.schedule('* * * * * 5', () => {
         .then((res) =>res.json())
         .then(async(response)=>{
             //   console.log(response.db.result.P_InfoProductos_RowSet)
-            const productsOracle = response.db.result.P_InfoProductos_RowSet;
+            const productsOracle = filterData(response.db.result.P_InfoProductos_RowSet);
+            
             //   console.log(productsOracle[0])
-           await productsOracle.forEach(async (element) => {
-                const exist = await existProduct(element.INVENTORY_ITEM_ID)
-                if(!exist){
-                    const format = getFormat(element)
-                    const prod = new Product({...format});
-                    await prod.save();
-            }
-            else{                                
-            }
+           await productsOracle.forEach(async (element,index) => {
+              const exist = await existProduct(element.CODIGO_ITEM)
+              if(!exist){
+                  console.log("agregado")
+                  const format = getFormat(element)
+                  const prod = new Product({...format});
+                  await prod.save();
+          }
+          else{                                
+          }
           });
-          console.log("final de actualizacion")
-          console.log(`numero de productos agregados ${totalAddProducts}`)
       }).catch(err =>console.log(err))
+      console.log("fin")
   }
   
   const existProduct= async(id)=>{
@@ -41,9 +41,22 @@ const getDB = cron.schedule('* * * * * 5', () => {
     else return false;
   }
 
+  const filterData = (data)=>{
+    const arrValid =[]
+    const productsOracle = []
+            data.forEach( (element) => {
+            if(arrValid.indexOf(element.CODIGO_ITEM) === -1){
+              arrValid.push(element.CODIGO_ITEM)
+              productsOracle.push(element)
+            }
+          })
+          console.log(productsOracle.length)
+          return productsOracle;
+  }
+
   const getFormat = (elem)=>{
     return {
-        idFromOracle:elem.INVENTORY_ITEM_ID,
+        idFromOracle:elem.CODIGO_ITEM,
         available:true, //cambiar
         name:elem.DESCRIPTION,
         albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",
