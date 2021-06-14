@@ -15,7 +15,7 @@ const addPointFavorite = async(req,res=response)=>{
     
 
     const fav = await Favorite.findById(productId);
-    await  fav.updateOne({total:fav.total+1})
+    await  fav.updateOne({total:fav.total+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]})
 
     const user = await User.findById(userId)
     const {favorites} = user;

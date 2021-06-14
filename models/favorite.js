@@ -6,6 +6,9 @@ const FavoriteSchema = Schema({
     },
     total:{
         type: Number,
+    },
+    dates:{
+        type:Array,
     }
 
 })

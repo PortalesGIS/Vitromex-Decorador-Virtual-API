@@ -37,6 +37,9 @@ const UserSchema = Schema({
     },
     favorites:{
         type:Array,
+    },
+    dateUserCreated:{
+        type: 'string',
     }
 });
 
