@@ -5,7 +5,7 @@ const validateCampos = (req,res, next) => {
     const error = validationResult(req);
     if(!error.isEmpty()){
         return res.status(400).json({
-            ...error,            
+            msg:"te hace falta algun campo"            
         })
     }
     next();

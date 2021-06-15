@@ -1,7 +1,8 @@
 const cron = require('node-cron');
 const fetch = require('node-fetch');
 const Product = require('../models/product')
-
+const Favorite = require('../models/favorite')
+const Counter = require('../models/counter')
 const getDB = cron.schedule('* * * * * 5', () => {
     // ActualizarDB();
   });
@@ -25,7 +26,12 @@ const getDB = cron.schedule('* * * * * 5', () => {
                   console.log("agregado")
                   const format = getFormat(element)
                   const prod = new Product({...format});
-                  await prod.save();
+                  const pr = await prod.save()
+                  console.log(pr._id)
+                  const fav = new Favorite({_id:pr.id,total:0,dates:[]})
+                  await fav.save();
+                  const count = new Counter({_id:pr.id,total:0})
+                  await count.save();
           }
           else{                                
           }
