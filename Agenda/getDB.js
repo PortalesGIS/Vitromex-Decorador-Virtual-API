@@ -62,6 +62,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
 
   const getFormat = (elem)=>{
     return {
+        dateCreated:new Date().toISOString().slice(0,10),
         idFromOracle:elem.CODIGO_ITEM,
         available:true, //cambiar
         name:elem.DESCRIPTION,
@@ -79,6 +80,11 @@ const getDB = cron.schedule('* * * * * 5', () => {
         finish:elem.DESC_BRILLO,
         typologies:elem.TIPOLOGIA,
         aplications:[],
+        renders:[
+          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FCaptura%20de%20Pantalla%202021-06-16%20a%20la(s)%2014.50.21.png?alt=media&token=1a5ced19-84a1-45ac-ab02-1f49c88eeb5d",
+          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FCaptura%20de%20Pantalla%202021-06-16%20a%20la(s)%2014.50.21.png?alt=media&token=1a5ced19-84a1-45ac-ab02-1f49c88eeb5d",
+          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FCaptura%20de%20Pantalla%202021-06-16%20a%20la(s)%2014.50.21.png?alt=media&token=1a5ced19-84a1-45ac-ab02-1f49c88eeb5d",
+        ]
     }
   }
 

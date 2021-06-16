@@ -54,6 +54,12 @@ const ProductSchema = Schema({
     },
     idFromOracle:{
         type:"string",
+    },
+    dateCreated:{
+        type:"string",
+    },
+    renders:{
+        type:Array,
     }
 })
 ProductSchema.methods.toJSON = function(){
