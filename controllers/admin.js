@@ -17,6 +17,15 @@ const login = async(req,res=response)=>{
     })
 }
 
+const getAllAdmins = async(req,res=response)=>{
+    const query ={status:true}
+ const admins = await Admin.find(query)
+ res.json({
+    admins
+ })
+}
+
 module.exports={
-    login
+    login,
+    getAllAdmins
 }

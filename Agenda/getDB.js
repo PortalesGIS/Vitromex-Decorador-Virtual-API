@@ -18,7 +18,6 @@ const getDB = cron.schedule('* * * * * 5', () => {
         .then(async(response)=>{
             //   console.log(response.db.result.P_InfoProductos_RowSet)
             const productsOracle = filterData(response.db.result.P_InfoProductos_RowSet);
-            
             //   console.log(productsOracle[0])
            await productsOracle.forEach(async (element,index) => {
               const exist = await existProduct(element.CODIGO_ITEM)
@@ -81,9 +80,9 @@ const getDB = cron.schedule('* * * * * 5', () => {
         typologies:elem.TIPOLOGIA,
         aplications:[],
         renders:[
-          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FCaptura%20de%20Pantalla%202021-06-16%20a%20la(s)%2014.50.21.png?alt=media&token=1a5ced19-84a1-45ac-ab02-1f49c88eeb5d",
-          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FCaptura%20de%20Pantalla%202021-06-16%20a%20la(s)%2014.50.21.png?alt=media&token=1a5ced19-84a1-45ac-ab02-1f49c88eeb5d",
-          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FCaptura%20de%20Pantalla%202021-06-16%20a%20la(s)%2014.50.21.png?alt=media&token=1a5ced19-84a1-45ac-ab02-1f49c88eeb5d",
+          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
+          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
+          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
         ]
     }
   }
