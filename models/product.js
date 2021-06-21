@@ -5,6 +5,10 @@ const ProductSchema = Schema({
         type: 'string',
         require:[true,"El nombre es requerido"]
     },
+    description:{
+        type: 'string',
+        require:[true,"El nombre es requerido"]
+    },
     albedo:{
         type: 'string',
     },
@@ -60,10 +64,16 @@ const ProductSchema = Schema({
     },
     renders:{
         type:Array,
+    },
+    pzasXpallet:{
+        type:"string",
+    },
+    serie:{
+        type:"string",
     }
 })
 ProductSchema.methods.toJSON = function(){
-    const {idFromOracle, ...prod} = this.toObject();
+    const {idFromOracle, description, ...prod} = this.toObject();
     return prod;
 
 }

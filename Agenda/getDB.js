@@ -73,7 +73,8 @@ const getDB = cron.schedule('* * * * * 5', () => {
         dateCreated:new Date().toISOString().slice(0,10),
         idFromOracle:elem.CODIGO_ITEM,
         available:true, //cambiar
-        name:elem.DESCRIPTION,
+        description:elem.DESCRIPTION,
+        name:name,
         albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",
         normal:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/normal_3.jpg?alt=media&token=ac615096-5f08-4433-9bf5-e0d85cdbb034",
         roughness:"",
@@ -84,9 +85,11 @@ const getDB = cron.schedule('* * * * * 5', () => {
         branding:elem.DESC_MARCA,
         textureWidth:0,
         textureHeight:0,
+        serie:elem.SERIE,
         color:elem.COLOR,
         finish:elem.DESC_BRILLO,
         typologies:elem.TIPOLOGIA,
+        pzasXpallet:elem.PZASXPALLET,
         aplications:[],
         renders:[
           "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
