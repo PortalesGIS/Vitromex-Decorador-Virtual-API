@@ -17,6 +17,7 @@
     "express-validator": "^6.11.1",
     "mongoose": "^5.12.9",
     "node-cron": "^3.0.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.6.2"
   }
 }
