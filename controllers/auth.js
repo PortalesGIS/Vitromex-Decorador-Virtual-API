@@ -47,6 +47,30 @@ const login = async(req,res=response) =>{
     
 }
 
+const restorePassword = async(req,res=response) =>{
+    try {
+        const {email} = req.body;
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({
+                msg:"Ususario/password no son correctos"
+            })
+        }
+        //TODO: send email
+        console.log(user.name)
+        res.json({
+            msg:"email enviado"
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            msg:"Algo salio mal hable con el administrador"
+        })
+    }
+}
+
 module.exports ={
-    login
+    login,
+    restorePassword
 }

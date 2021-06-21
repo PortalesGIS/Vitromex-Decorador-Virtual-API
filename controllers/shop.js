@@ -4,7 +4,7 @@ const Shop = require('../models/shop');
 
 const getAllShops =async (req,res = response) => {
     const shops =await Shop.find({status:true});
-    const total = await Shop.count();
+    const total = await Shop.countDocuments();
     res.json({
         total,
         shops

@@ -12,7 +12,7 @@ const productGet =async (req,res = response) => {
         .limit(Number(limit)),
         Product.countDocuments(query),
     ])
-
+    
     res.json({
         AlltotalProducts:total,
         toalProductsInThisQuery:products.length,

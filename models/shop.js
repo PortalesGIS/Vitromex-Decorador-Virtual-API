@@ -29,6 +29,12 @@ const ShopSchema = Schema({
         type:Boolean,
         default:true
     },
+    lat: {
+        type: 'string',
+    },
+    lng:{
+        type: 'string',
+    }
 
 })
 
