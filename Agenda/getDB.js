@@ -60,6 +60,15 @@ const getDB = cron.schedule('* * * * * 5', () => {
   }
 
   const getFormat = (elem)=>{
+    const arr = elem.DESCRIPTION.split(" ")
+    const end = arr.findIndex(el=>el==="CM")
+    let name="";
+    for (let index = 1; index < end-1; index++) {
+        name += arr[index]+" "
+    }
+    console.log("--------")
+    console.log(name)
+    console.log("--------")
     return {
         dateCreated:new Date().toISOString().slice(0,10),
         idFromOracle:elem.CODIGO_ITEM,
