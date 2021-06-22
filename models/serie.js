@@ -10,6 +10,10 @@ const SerieSchema = Schema({
     },
     
 })
+SerieSchema.methods.toJSON = function(){
+    const {__v, ...serie} = this.toObject();
+    return serie;
 
+}
 
 module.exports = model("Serie",SerieSchema);
