@@ -72,7 +72,6 @@ const restorePassword = async(req,res=response) =>{
 }
 
 const sendEmailRestorePassword = (user)=>{
-    console.log(user)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {

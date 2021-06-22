@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const Product = require('../models/product')
 const Favorite = require('../models/favorite')
 const Counter = require('../models/counter')
+const Serie = require('../models/serie')
 const getDB = cron.schedule('* * * * * 5', () => {
     // ActualizarDB();
   });
@@ -17,9 +18,11 @@ const getDB = cron.schedule('* * * * * 5', () => {
         .then((res) =>res.json())
         .then(async(response)=>{
             //   console.log(response.db.result.P_InfoProductos_RowSet)
-            const productsOracle = filterData(response.db.result.P_InfoProductos_RowSet);
+            const productsOracle = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet);
+            const productsOracleSeries = filterDataNotDuplicateSeries(response.db.result.P_InfoProductos_RowSet);
+            await addSeries(productsOracleSeries);
             //   console.log(productsOracle[0])
-           await productsOracle.forEach(async (element,index) => {
+           await productsOracle.forEach(async (element) => {
               const exist = await existProduct(element.CODIGO_ITEM)
               if(!exist){
                   console.log("agregado")
@@ -46,7 +49,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
     else return false;
   }
 
-  const filterData = (data)=>{
+  const filterDataNotDuplicate = (data)=>{
     const arrValid =[]
     const productsOracle = []
             data.forEach( (element) => {
@@ -59,6 +62,20 @@ const getDB = cron.schedule('* * * * * 5', () => {
           return productsOracle;
   }
 
+  const filterDataNotDuplicateSeries = (data)=>{
+    const arrValid =[]
+    const productsOracle = []
+            data.forEach( (element) => {
+            if(arrValid.indexOf(element.SERIE) === -1){
+              arrValid.push(element.SERIE)
+              productsOracle.push(element)
+            }
+          })
+          console.log(productsOracle.length)
+          return productsOracle;
+  }
+
+
   const getFormat = (elem)=>{
     const arr = elem.DESCRIPTION.split(" ")
     const end = arr.findIndex(el=>el==="CM")
@@ -66,9 +83,6 @@ const getDB = cron.schedule('* * * * * 5', () => {
     for (let index = 1; index < end-1; index++) {
         name += arr[index]+" "
     }
-    console.log("--------")
-    console.log(name)
-    console.log("--------")
     return {
         dateCreated:new Date().toISOString().slice(0,10),
         idFromOracle:elem.CODIGO_ITEM,
@@ -99,6 +113,16 @@ const getDB = cron.schedule('* * * * * 5', () => {
     }
   }
 
+  const addSeries =async (elements) => {
+    elements.forEach(async (element) => {
+      const exist =await Serie.findOne({name:element.SERIE})
+      if(!exist){
+        const serie = new Serie({name:element.SERIE,img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/serie.jpg?alt=media&token=6c9893ea-7175-47e3-a023-24fd8cdc525c"})
+        await  serie.save()
+        console.log(`Serie guardada: ${element.SERIE}`)
+      }      
+    })
+  }
 
 module.exports ={
     getDB,
