@@ -117,7 +117,12 @@ const getDB = cron.schedule('* * * * * 5', () => {
     elements.forEach(async (element) => {
       const exist =await Serie.findOne({name:element.SERIE})
       if(!exist){
-        const serie = new Serie({name:element.SERIE,img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/serie.jpg?alt=media&token=6c9893ea-7175-47e3-a023-24fd8cdc525c"})
+        const serie = new Serie({
+          name:element.SERIE,
+          img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/serie.jpg?alt=media&token=6c9893ea-7175-47e3-a023-24fd8cdc525c",
+          render:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/render-serie.jpg?alt=media&token=1f16fdc2-f2fb-4086-8df7-d448dce28143",
+          dateCreated:new Date().toISOString().slice(0,10)
+        })
         await  serie.save()
         console.log(`Serie guardada: ${element.SERIE}`)
       }      

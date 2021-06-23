@@ -10,11 +10,14 @@ const SerieSchema = Schema({
     },
     render:{
         type: 'string'
+    },
+    dateCreated:{
+        type: 'string',
     }
     
 })
 SerieSchema.methods.toJSON = function(){
-    const {__v, ...serie} = this.toObject();
+    const {__v,dateCreated, ...serie} = this.toObject();
     return serie;
 
 }
