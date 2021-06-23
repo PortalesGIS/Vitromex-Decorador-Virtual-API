@@ -10,6 +10,9 @@ const AdminSchema = Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    dateCreated:{
+        type:'string',
     }
 })
 

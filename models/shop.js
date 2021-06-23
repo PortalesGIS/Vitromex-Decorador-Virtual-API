@@ -34,8 +34,17 @@ const ShopSchema = Schema({
     },
     lng:{
         type: 'string',
+    },
+    dateCreated:{
+        type: 'string',
     }
 
 })
+
+ShopSchema.methods.toJSON = function(){
+    const {dateCreated, ...shops} = this.toObject();
+    return shops;
+
+}
 
 module.exports = model("Shop",ShopSchema);
