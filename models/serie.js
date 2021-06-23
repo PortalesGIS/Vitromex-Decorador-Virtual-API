@@ -8,6 +8,9 @@ const SerieSchema = Schema({
     img:{
         type: 'string',
     },
+    render:{
+        type: 'string'
+    }
     
 })
 SerieSchema.methods.toJSON = function(){
