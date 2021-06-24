@@ -4,6 +4,7 @@ const Product = require('../models/product')
 const Favorite = require('../models/favorite')
 const Counter = require('../models/counter')
 const Serie = require('../models/serie')
+const Typologies = require('../models/typologies')
 const getDB = cron.schedule('* * * * * 5', () => {
     // ActualizarDB();
   });
@@ -19,8 +20,13 @@ const getDB = cron.schedule('* * * * * 5', () => {
         .then(async(response)=>{
             //   console.log(response.db.result.P_InfoProductos_RowSet)
             const productsOracle = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet);
+
             const productsOracleSeries = filterDataNotDuplicateSeries(response.db.result.P_InfoProductos_RowSet);
             await addSeries(productsOracleSeries);
+
+            const productsOracleTypologies = filterDataNotDuplicateTypologies(response.db.result.P_InfoProductos_RowSet);
+            await addTypologies(productsOracleTypologies);
+
             //   console.log(productsOracle[0])
            await productsOracle.forEach(async (element) => {
               const exist = await existProduct(element.CODIGO_ITEM)
@@ -68,6 +74,19 @@ const getDB = cron.schedule('* * * * * 5', () => {
             data.forEach( (element) => {
             if(arrValid.indexOf(element.SERIE) === -1){
               arrValid.push(element.SERIE)
+              productsOracle.push(element)
+            }
+          })
+          console.log(productsOracle.length)
+          return productsOracle;
+  }
+
+  const filterDataNotDuplicateTypologies = (data)=>{
+    const arrValid =[]
+    const productsOracle = []
+            data.forEach( (element) => {
+            if(arrValid.indexOf(element.DESC_TIPOLOGIA) === -1){
+              arrValid.push(element.DESC_TIPOLOGIA)
               productsOracle.push(element)
             }
           })
@@ -125,6 +144,21 @@ const getDB = cron.schedule('* * * * * 5', () => {
         })
         await  serie.save()
         console.log(`Serie guardada: ${element.SERIE}`)
+      }      
+    })
+  }
+
+  const addTypologies =async (elements) => {
+    elements.forEach(async (element) => {
+      const exist =await Typologies.findOne({name:element.DESC_TIPOLOGIA})
+      if(!exist){
+        const typologie = new Typologies({
+          name:element.DESC_TIPOLOGIA,
+          img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/typologies%2Ftipologia.png?alt=media&token=e5057344-040d-46e0-a0f2-776768e8ea14",          
+          dateCreated:new Date().toISOString().slice(0,10)
+        })
+        await  typologie.save()
+        console.log(`Serie guardada: ${element.DESC_TIPOLOGIA}`)
       }      
     })
   }

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getAllAplications, getAllTypologies } = require("../controllers/onboarding");
+const { getAllAplications, getAllTypologies, getAllTypologiesCMS } = require("../controllers/onboarding");
 
 const router = Router();
 
@@ -8,4 +8,5 @@ router.get("/aplications",
 );
 
 router.get("/typologies",getAllTypologies)
+router.get("/typologies/cms",getAllTypologiesCMS)
 module.exports = router;

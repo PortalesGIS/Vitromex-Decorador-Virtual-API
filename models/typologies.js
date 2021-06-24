@@ -8,8 +8,14 @@ const TypologiesSchema = Schema({
     img:{
         type: 'string',
     },
-    
+    dateCreated:{
+        type: 'string',
+    }
 })
+TypologiesSchema.methods.toJSON = function(){
+    const {__v,dateCreated, ...serie} = this.toObject();
+    return serie;
 
+}
 
 module.exports = model("Typologies",TypologiesSchema);
