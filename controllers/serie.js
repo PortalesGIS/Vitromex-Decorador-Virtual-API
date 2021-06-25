@@ -5,7 +5,7 @@ const Serie = require("../models/serie");
 // este NO regresa el campo "dateCreated"
 const getAllSeries =async (req,res = response) => {
     const serie =await Serie.find();
-    const total = await Serie.count();
+    const total = await Serie.countDocuments();
     res.json({total,
         serie
     })

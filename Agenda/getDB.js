@@ -111,7 +111,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",
         normal:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/normal_3.jpg?alt=media&token=ac615096-5f08-4433-9bf5-e0d85cdbb034",
         roughness:"",
-        smallPicture:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/Humbra%20Grafito%2055x55_AL_300.jpg?alt=media&token=16dca52e-8a0e-4e17-bd4e-aff1f37e4ea9",        
+        smallPicture:"https://random.imagecdn.app/300/300",        
         sized:elem.FORMATO,
         isNewProduct:true,//:TODO dfsd
         family:elem.FAMILIA,
@@ -121,7 +121,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         serie:elem.SERIE,
         color:elem.COLOR,
         finish:elem.DESC_BRILLO,
-        typologies:elem.TIPOLOGIA,
+        typologies:elem.DESC_TIPOLOGIA,
         pzasXpallet:elem.PZASXPALLET,
         aplications:[],
         renders:[

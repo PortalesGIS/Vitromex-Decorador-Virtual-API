@@ -11,8 +11,8 @@ const userPost = async  (req,res = response) => {
     }) 
     //
     // encriptadr password
-    const salt = bcryptjs.genSaltSync();
-    user.password = bcryptjs.hashSync(password,salt)
+    // const salt = bcryptjs.genSaltSync();
+    // user.password = bcryptjs.hashSync(password,salt)
     // 
     try {
         await user.save();       
