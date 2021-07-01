@@ -14,9 +14,9 @@ const getAllShops =async (req,res = response) => {
 // este regresa el campo "dateCreated"
 const getAllShopsCMS =async (req,res = response) => {
     const ie =await Shop.find();
-    const shop = []
+    const shops = []
     ie.forEach(elm=>{
-        shop.push( {
+        shops.push( {
             status:elm.status,
             _id:elm._id,
             name:elm.name,
@@ -32,10 +32,9 @@ const getAllShopsCMS =async (req,res = response) => {
             dateCreated:elm.dateCreated,
          } )
      })
-     console.log(shop)
     const total = await Shop.countDocuments();
     res.json({total,
-       shop
+       shops
     })
 }
 
