@@ -27,7 +27,6 @@ const getDB = cron.schedule('* * * * * 5', () => {
             const productsOracleTypologies = filterDataNotDuplicateTypologies(response.db.result.P_InfoProductos_RowSet);
             await addTypologies(productsOracleTypologies);
 
-            //   console.log(productsOracle[0])
            await productsOracle.forEach(async (element) => {
               const exist = await existProduct(element.CODIGO_ITEM)
               if(!exist){
@@ -138,8 +137,9 @@ const getDB = cron.schedule('* * * * * 5', () => {
       if(!exist){
         const serie = new Serie({
           name:element.SERIE,
-          img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/serie.jpg?alt=media&token=6c9893ea-7175-47e3-a023-24fd8cdc525c",
-          render:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/render-serie.jpg?alt=media&token=1f16fdc2-f2fb-4086-8df7-d448dce28143",
+          typologie:element.DESC_TIPOLOGIA,
+          img:"https://random.imagecdn.app/300/300",
+          render:"https://random.imagecdn.app/870/520",
           dateCreated:new Date().toISOString().slice(0,10)
         })
         await  serie.save()

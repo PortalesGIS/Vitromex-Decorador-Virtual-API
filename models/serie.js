@@ -13,6 +13,9 @@ const SerieSchema = Schema({
     },
     dateCreated:{
         type: 'string',
+    },
+    typologie:{
+        type: 'string',
     }
     
 })
