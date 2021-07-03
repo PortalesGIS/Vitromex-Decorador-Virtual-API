@@ -19,23 +19,34 @@ const productGet =async (req,res = response) => {
         products
     })
 }
+
+
 const getProductsArko= async (req,res=response)=>{
-    const query ={available:true,branding:"ARKO"}
-    const [products,total]= await Promise.all([
-        Product.find(query),
-        Product.countDocuments(query),
-    ]);
+    const [products,total] = await getProductsDB({available:true,branding:"ARKO"})
     res.json({
         toalProductsInThisQuery:total,
         products
     })
 }
+const getProductsVitromexCMS = async (req,res=response)=>{
+    const [products,total] =await getProductsDB({branding:"VITROMEX"});
+    res.json({
+        toalProductsInThisQuery:total,
+        products
+    })
+}
+
+const getProductsARKOCMS = async (req,res=response)=>{
+    const [products,total] =await getProductsDB({branding:"ARKO"});
+    res.json({
+        toalProductsInThisQuery:total,
+        products
+    })
+}
+
+
 const getProductsVitromex= async (req,res=response)=>{
-    const query ={available:true,branding:"VITROMEX"}
-    const [products,total]= await Promise.all([
-        Product.find(query),
-        Product.countDocuments(query),
-    ]);
+    const [products,total] = await getProductsDB({available:true,branding:"VITROMEX"})    
     res.json({
         toalProductsInThisQuery:total,
         products
@@ -50,9 +61,20 @@ const getProductById = async(req,res = response) => {
     })
 }
 
+
+const getProductsDB = async (query) => {
+    const [products,total]= await Promise.all([
+        Product.find(query),
+        Product.countDocuments(query),
+    ]);
+    return [products,total];
+
+}
 module.exports={
     productGet,
     getProductsArko,
     getProductsVitromex,
-    getProductById
+    getProductById,
+    getProductsVitromexCMS,
+    getProductsARKOCMS,
 }
