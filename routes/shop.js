@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { getAllShops, getAllShopsCMS } = require('../controllers/shop');
+const { validateJwt } = require("../middlewares/validateJwt");
 
 
 const router = Router();

@@ -13,8 +13,7 @@ const validateJwt = (req=request,res=response,next) =>{
         jwt.verify(token, process.env.SECRETKEY);
         next();
     } catch (error) {
-        console.log(error) 
-        res.status(4001).json({
+        res.status(401).json({
             msg:"no valido"
         })
     }

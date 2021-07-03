@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { getAllAplications, getAllTypologies, getAllTypologiesCMS } = require("../controllers/onboarding");
+const { validateJwt } = require("../middlewares/validateJwt");
 
 const router = Router();
 

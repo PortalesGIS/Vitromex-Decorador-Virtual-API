@@ -14,10 +14,8 @@ router.get("/arko",getProductsArko)
 router.get("/arko/cms",getProductsARKOCMS)
 
 router.get("/vitromex",getProductsVitromex)
-router.get("/vitromex/cms",
-[
-    validateJwt,
-],getProductsVitromexCMS)
+router.get("/vitromex/cms",getProductsVitromexCMS)
+// router.get("/vitromex/cms",[validateJwt,],getProductsVitromexCMS)
 
 router.get("/one/:id",[
     check("id","No es un ID valido").isMongoId(),
