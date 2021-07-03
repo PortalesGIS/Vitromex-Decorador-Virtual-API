@@ -12,7 +12,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
 
   const ActualizarDB = async() => {
       console.log("empieza a actualizar la DB");
-      fetch("http://localhost:8080/api/test/db",{
+      fetch("https://vitromex-arko-api.herokuapp.com/api/test/db",{
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })

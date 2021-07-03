@@ -1,5 +1,6 @@
 const { response } = require("express");
 const Admin = require("../models/admin")
+const { genJWT } = require("../helpers/jwt");
 
 const login = async(req,res=response)=>{
     const {email,password} = req.body;
@@ -10,9 +11,13 @@ const login = async(req,res=response)=>{
             })
         }
         // TODO: peticion a su endpoint
+
+        // JWT
+        const token = await genJWT(admin._id);
         console.log("suponiendo que valido user and pass entoncs",{admin})
     res.json({
         ok:true,
+        token,
         msg:"entro"
     })
 }
