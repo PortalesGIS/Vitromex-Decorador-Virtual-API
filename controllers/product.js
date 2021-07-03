@@ -61,6 +61,15 @@ const getProductById = async(req,res = response) => {
     })
 }
 
+const changeStatusProduct = async(req,res = response) =>{
+    const {id,available} = req.body
+    const product = await Product.findById(id)
+    await product.update({available})
+    res.json({
+        msg:"status cambio",
+
+    })
+}
 
 const getProductsDB = async (query) => {
     const [products,total]= await Promise.all([
@@ -77,4 +86,5 @@ module.exports={
     getProductById,
     getProductsVitromexCMS,
     getProductsARKOCMS,
+    changeStatusProduct
 }
