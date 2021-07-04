@@ -38,7 +38,17 @@ const getAllShopsCMS =async (req,res = response) => {
     })
 }
 
+const changeStatusStore = async(req,res = response) =>{
+    const {id,status} = req.body
+    const store = await Shop.findById(id)
+    await store.updateOne({status})
+    res.json({
+        msg:"status cambio",
+    })
+}
+
 module.exports={
     getAllShops,
-    getAllShopsCMS
+    getAllShopsCMS,
+    changeStatusStore
 }

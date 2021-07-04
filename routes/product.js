@@ -20,6 +20,7 @@ router.post("/chagestatus",[
     validateJwt,
     check("id","No es un ID valido").isMongoId(),
     check("id").custom(exitProductById),
+    check("available","No tienes el estado a cambiar").not().isEmpty(),
     validateCampos
 ],changeStatusProduct)
 // router.get("/vitromex/cms",[validateJwt,],getProductsVitromexCMS)
