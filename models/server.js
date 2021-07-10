@@ -2,7 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
-const {getDB,ActualizarDB} = require('../Agenda/getDB')
+const {getDB,ActualizarDB} = require('../Agenda/getDB');
+const fileUpload = require('express-fileupload');
 
    
 class Server {
@@ -41,16 +42,21 @@ class Server {
     }
 
     middlewares(){
-
         // cors
         this.app.use(cors());
 
         // parseo y lectura de body
         this.app.use(express.json());
+
         // directorio publico
         this.app.use(express.static("public"))
-        // 
-        
+
+        // fileUpload 
+        this.app.use(fileUpload({
+            useTempFiles:true,
+            tempFileDir: "/temp/",
+            createParentPath:true
+        }))
     }
 
     routes(){
