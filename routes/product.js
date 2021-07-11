@@ -1,6 +1,11 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { productGet, getProductsArko, getProductsVitromex, getProductById, getProductsVitromexCMS, getProductsARKOCMS, changeStatusProduct, uploadProduct } = require('../controllers/product');
+const { productGet, getProductsArko, getProductsVitromex, getProductById,
+    getProductsVitromexCMS,
+    getProductsARKOCMS,
+    changeStatusProduct,
+    uploadProductImg, 
+    uploadProductImgRender} = require('../controllers/product');
 const { exitProductById } = require('../helpers/db-validators');
 const {validateCampos} = require('../middlewares/validateCampos');
 const { validateJwt } = require('../middlewares/validateJwt');
@@ -24,14 +29,22 @@ router.post("/chagestatus",[
     validateCampos
 ],changeStatusProduct)
 
-router.post("/upload-imgs",[
+router.post("/upload-img",[
     validateJwt,
     check("id","No es un ID valido").isMongoId(),
     check("id").custom(exitProductById),
     // check("available","No tienes el estado a cambiar").not().isEmpty(),
     validateCampos
-],uploadProduct)
-// router.get("/vitromex/cms",[validateJwt,],getProductsVitromexCMS)
+],uploadProductImg)
+
+router.post("/upload-img-render",[
+    validateJwt,
+    check("id","No es un ID valido").isMongoId(),
+    check("id").custom(exitProductById),
+    check("positionArray","es necesaria la posicion del array 0-1-2").not().isEmpty(),        
+    validateCampos
+],uploadProductImgRender)
+
 
 router.get("/one/:id",[
     check("id","No es un ID valido").isMongoId(),
