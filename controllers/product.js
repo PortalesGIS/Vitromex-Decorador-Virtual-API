@@ -102,7 +102,7 @@ const uploadProductImg = async(req,res = response)=>{
     }
     const { id:idProduct, camp} = req.body
     const {file} = req.files
-    uploadAzureImg(file,process.env.AZURE_BOLB_CONTAINER_NAME,async (url)=>{
+    uploadAzureImg(file,async (url)=>{
         const product = await Product.findById(idProduct)
         await product.updateOne({[camp]:url})
         res.json({
@@ -126,7 +126,7 @@ const uploadProductImgRender = async (req,res = response)=>{
         })
     }
     const {file} = req.files
-    uploadAzureImg(file,process.env.AZURE_BOLB_CONTAINER_NAME_RENDERS,async (url)=>{
+    uploadAzureImg(file,async (url)=>{
         const product = await Product.findById(idProduct)
         let renderToUpload = product.renders
         renderToUpload[positionArray] = url
@@ -140,11 +140,11 @@ const uploadProductImgRender = async (req,res = response)=>{
     
 }
 
-const uploadAzureImg = async (file,blob, callBack)=>{
+const uploadAzureImg = async (file, callBack)=>{
     const blobservice =await azure.createBlobService(process.env.AZURE_STORAGE_CONNECTION_STRING);
     fileName = uuidv4()+file.name.replace(/ /g, "")
     if(file.tempFilePath){
-        blobservice.createBlockBlobFromLocalFile(`${blob}`,fileName,file.tempFilePath,{
+        blobservice.createBlockBlobFromLocalFile(`imagenes`,fileName,file.tempFilePath,{
             contentType: 'image/jpeg'
          },
     function(error, result, response) {
