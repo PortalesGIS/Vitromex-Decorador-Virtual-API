@@ -73,6 +73,26 @@ const changeStatusProduct = async(req,res = response) =>{
     })
 }
 
+const uploadProductsOptions = async(req,res = response)=>{
+    const {id:idProduct, camp, value} = req.body
+    if(camp!="name"  &&  camp!="textureWidth" && camp!="textureHeight" && camp!="aplications"){
+        return res.status(400).json({
+            msg:"el campo a cambiar no es valido"
+        })
+    }
+    if(camp === "aplications" && typeof value != "object"){
+        return res.status(400).json({
+            msg:"tiene que ser un Array"
+        })
+    }
+    const product = await Product.findById(idProduct)
+    await product.updateOne({[camp]:value})
+    res.json({
+        msg:"ok",
+        [camp]:value
+    })
+} 
+
 const uploadProductImg = async(req,res = response)=>{
 
     if(!req.files || Object.keys(req.files).length ===0 ){
@@ -90,7 +110,6 @@ const uploadProductImg = async(req,res = response)=>{
             url
         })
     })
-    
 }
 
 const uploadProductImgRender = async (req,res = response)=>{
@@ -121,23 +140,6 @@ const uploadProductImgRender = async (req,res = response)=>{
     
 }
 
-// const uploadProductDB = async(nameData,data,id)=>{
-//     const product = await Product.findById(id)
-//     if(nameData === "renders" ){
-//         await product.updateOne({[nameData]:[...product.renders,data]})
-//         console.log("render update")
-//     }
-//     else{
-//         await product.updateOne({[nameData]:data})
-//         console.log(`update: ${nameData}`)
-//     }
-// }
-// const uploadProductClearCamp = async (nameData,clearValue,id) =>{
-//     const product = await Product.findById(id)
-//     await product.updateOne({[nameData]:clearValue})
-//     console.log(`camp clear : ${nameData}`)
-
-// }
 const uploadAzureImg = async (file,blob, callBack)=>{
     const blobservice =await azure.createBlobService(process.env.AZURE_STORAGE_CONNECTION_STRING);
     fileName = uuidv4()+file.name.replace(/ /g, "")
@@ -174,5 +176,6 @@ module.exports={
     getProductsARKOCMS,
     changeStatusProduct,
     uploadProductImg,
-    uploadProductImgRender
+    uploadProductImgRender,
+    uploadProductsOptions
 }

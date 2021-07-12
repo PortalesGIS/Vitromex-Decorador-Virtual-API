@@ -5,7 +5,8 @@ const { productGet, getProductsArko, getProductsVitromex, getProductById,
     getProductsARKOCMS,
     changeStatusProduct,
     uploadProductImg, 
-    uploadProductImgRender} = require('../controllers/product');
+    uploadProductImgRender,
+    uploadProductsOptions} = require('../controllers/product');
 const { exitProductById } = require('../helpers/db-validators');
 const {validateCampos} = require('../middlewares/validateCampos');
 const { validateJwt } = require('../middlewares/validateJwt');
@@ -45,6 +46,14 @@ router.post("/upload-img-render",[
     validateCampos
 ],uploadProductImgRender)
 
+router.post("/upload-options",[
+    validateJwt,
+    check("id","No es un ID valido").isMongoId(),
+    check("id").custom(exitProductById),
+    check("camp","es necesario el campo a cambiar").not().isEmpty(),    
+    check("value","es necesario el valor del campo a cambiar").not().isEmpty(),    
+    validateCampos
+],uploadProductsOptions)
 
 router.get("/one/:id",[
     check("id","No es un ID valido").isMongoId(),
