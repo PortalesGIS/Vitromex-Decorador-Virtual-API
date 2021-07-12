@@ -149,7 +149,7 @@ const uploadAzureImg = async (file, callBack)=>{
          },
     function(error, result, response) {
        if (!error) {
-           const url=  blobservice.host.primaryHost + `${blob}`+"/"+ fileName
+           const url=  blobservice.host.primaryHost + `imagenes`+"/"+ fileName
            callBack(url)
        }
        else
