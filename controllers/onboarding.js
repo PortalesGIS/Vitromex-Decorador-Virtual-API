@@ -40,26 +40,25 @@ const getAllTypologiesCMS =async (req,res = response) => {
 }
 
 const updateAplication = async (req,res = response) =>{
-    if(!req.files || Object.keys(req.files).length ===0 ){
+    const {name,id:productId} = req.body;
+    const aplications =await Aplications.findById(productId)
+    if(!aplications){
         res.status(400).json({
-            msg:"No hay archivosde imagenes que subir"
+            error:"no existe el producto"
         })
     }
-    const {name,id:productId} = req.body;
-    const {file}= req.files
-    uploadAzureImg(file,process.env.AZURE_BLOB_CONTAINER_APLICATIONS,async (url)=>{        
-        const aplications =await Aplications.findById(productId)
-        if(name){
-            await aplications.updateOne({img:url,name:name})
-        }        
-        else{
-            await aplications.updateOne({img:url})
-        }
-        res.json({
-            ok:"updated!",
-            url,
-        })
-    })  
+    if(req.files ){
+        const {file}= req.files
+        uploadAzureImg(file,process.env.AZURE_BLOB_CONTAINER_APLICATIONS,async (url)=>{ 
+                await aplications.updateOne({img:url})
+        })  
+    }
+    if(name){
+        await aplications.updateOne({name:name})
+    }
+    res.json({
+        msg:"updated",
+    })
 }
 
 module.exports={
