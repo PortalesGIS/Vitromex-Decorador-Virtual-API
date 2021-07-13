@@ -57,7 +57,31 @@ const updateAplication = async (req,res = response) =>{
         await aplications.updateOne({name:name})
     }
     res.json({
-        msg:"updated",
+        msg:"aplication updated",
+    })
+}
+
+const updateTypologies = async (req,res = response) =>{
+    const {name,id:productId} = req.body;
+    const typologie =await Typologies.findById(productId)
+    if(!typologie){
+        res.status(400).json({
+            error:"no existe el producto"
+        })
+    }
+    if(req.files ){
+        const {file}= req.files
+        uploadAzureImg(file,process.env.AZURE_BLOB_CONTAINER_TYPOLOGIAS,async (url)=>{ 
+            
+            await typologie.updateOne({img:url})
+        })  
+        }
+    if(name){
+            await typologie.updateOne({name:name})
+    }
+    res.json({
+        msg:"typologie  updated",
+        changes
     })
 }
 
@@ -65,5 +89,6 @@ module.exports={
     getAllAplications,
     getAllTypologies,
     getAllTypologiesCMS,
-    updateAplication
+    updateAplication,
+    updateTypologies
 }
