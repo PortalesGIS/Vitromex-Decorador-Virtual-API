@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { getAllAplications, getAllTypologies, getAllTypologiesCMS, updateAplication, updateTypologies } = require("../controllers/onboarding");
+const { getAllAplications, getAllTypologies, getAllTypologiesCMS, updateAplication, updateTypologies, createAplications } = require("../controllers/onboarding");
 const { validateCampos } = require("../middlewares/validateCampos");
 const { validateJwt } = require("../middlewares/validateJwt");
 
@@ -26,5 +26,11 @@ router.post("/typologies/update",[
     check("id","No es un ID valido").isMongoId(),           
     validateCampos
 ], updateTypologies)
+
+router.post("/aplications/create",[
+    validateJwt,
+    check("name","Es necesario un nombre").not().isEmpty(),   
+    validateCampos,   
+],createAplications)
 
 module.exports = router;

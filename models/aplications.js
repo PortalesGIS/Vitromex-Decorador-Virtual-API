@@ -8,6 +8,9 @@ const AplicationsSchema = Schema({
     img:{
         type: 'string',
     },
+    dateCreated:{
+        type: 'string',
+    }
     
 })
 

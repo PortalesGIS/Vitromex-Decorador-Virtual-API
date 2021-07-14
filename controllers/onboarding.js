@@ -80,8 +80,31 @@ const updateTypologies = async (req,res = response) =>{
             await typologie.updateOne({name:name})
     }
     res.json({
-        msg:"typologie  updated",
-        changes
+        msg:"typologie  updated"
+    })
+}
+
+const createAplications = (req,res = response)=>{
+    if(!req.files || Object.keys(req.files).length ===0 ){
+        res.status(400).json({
+            msg:"No hay archivos de imagenes que subir"
+        })
+    }
+    const {file} =req.files
+
+    const {name} = req.body
+
+    uploadAzureImg(file,process.env.AZURE_BLOB_CONTAINER_APLICATIONS, async(url)=>{
+        const aplication = new Aplications({
+            name:name,
+            img:url,
+            dateCreated:new Date().toISOString().slice(0,10)
+          })
+          await  aplication.save()
+    
+        res.json({
+            msg:"create aplication!"
+        })
     })
 }
 
@@ -90,5 +113,6 @@ module.exports={
     getAllTypologies,
     getAllTypologiesCMS,
     updateAplication,
-    updateTypologies
+    updateTypologies,
+    createAplications
 }
