@@ -1,6 +1,7 @@
 const { response } = require("express");
 const { uploadAzureImg } = require("../helpers/azure");
 const Aplications = require("../models/aplications");
+const serie = require("../models/serie");
 const Typologies = require("../models/typologies");
 
 
@@ -91,9 +92,7 @@ const createAplications = (req,res = response)=>{
         })
     }
     const {file} =req.files
-
     const {name} = req.body
-
     uploadAzureImg(file,process.env.AZURE_BLOB_CONTAINER_APLICATIONS, async(url)=>{
         const aplication = new Aplications({
             name:name,
@@ -108,11 +107,79 @@ const createAplications = (req,res = response)=>{
     })
 }
 
+const createTypologie = (req,res = response)=>{
+    if(!req.files || Object.keys(req.files).length ===0 ){
+        res.status(400).json({
+            msg:"No hay archivos de imagenes que subir"
+        })
+    }
+    const {file} =req.files
+    const {name} = req.body
+    uploadAzureImg(file,process.env.AZURE_BLOB_CONTAINER_TYPOLOGIAS, async(url)=>{
+        const typologia = new Typologies({
+            name:name,
+            img:url,
+            dateCreated:new Date().toISOString().slice(0,10)
+          })
+          await  typologia.save()
+    
+        res.json({
+            msg:"create typologia!"
+        })
+    })
+}
+
+
+const deleteAplication = async(req,res = response) =>{
+    const {id:aplicationID} =  req.body
+    const aplication = await Aplications.findById(aplicationID)
+    if(!aplication){
+        res.status(400).json({
+            error: "no existe esa aplicacion"
+        })
+    }
+    else{
+        try {
+            aplication.deleteOne()
+            res.json({
+                msg:"aplicacion eliminada correctamente",
+                name:aplication.name,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const deleteTypologie = async(req,res = response) =>{
+    const {id:typologieID} =  req.body
+    const typologie = await Typologies.findById(typologieID)
+    if(!typologie){
+        res.status(400).json({
+            error: "no existe esa typologia"
+        })
+    }
+    else{
+        try {
+            typologie.deleteOne()
+            res.json({
+                msg:"typologia eliminada correctamente",
+                name:typologie.name,
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 module.exports={
     getAllAplications,
     getAllTypologies,
     getAllTypologiesCMS,
     updateAplication,
     updateTypologies,
-    createAplications
+    createAplications,
+    createTypologie,
+    deleteAplication,
+    deleteTypologie
 }

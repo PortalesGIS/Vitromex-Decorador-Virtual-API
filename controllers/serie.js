@@ -25,7 +25,6 @@ const getAllSeriesCMS =async (req,res = response) => {
             render:elm.render
          } )
      })
-     console.log(serie)
     const total = await Serie.countDocuments();
     res.json({total,
        serie
