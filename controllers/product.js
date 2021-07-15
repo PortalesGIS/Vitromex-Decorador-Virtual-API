@@ -73,6 +73,15 @@ const changeStatusProduct = async(req,res = response) =>{
     })
 }
 
+const changeStatusIsNew = async(req,res = response) =>{
+    const {id,isNew} = req.body
+    const product = await Product.findById(id)
+    await product.updateOne({isNewProduct:isNew})
+    res.json({
+        msg:`el estatus del producto ${product.name} cambio a ${isNew}`,
+    })
+}
+
 const uploadProductsOptions = async(req,res = response)=>{
     const {id:idProduct, camp, value} = req.body
     if(camp!="name"  &&  camp!="textureWidth" && camp!="textureHeight" && camp!="aplications"){
@@ -177,5 +186,6 @@ module.exports={
     changeStatusProduct,
     uploadProductImg,
     uploadProductImgRender,
+    changeStatusIsNew,
     uploadProductsOptions
 }

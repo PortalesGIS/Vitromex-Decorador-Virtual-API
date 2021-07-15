@@ -6,7 +6,8 @@ const { productGet, getProductsArko, getProductsVitromex, getProductById,
     changeStatusProduct,
     uploadProductImg, 
     uploadProductImgRender,
-    uploadProductsOptions} = require('../controllers/product');
+    uploadProductsOptions,
+    changeStatusIsNew} = require('../controllers/product');
 const { exitProductById } = require('../helpers/db-validators');
 const {validateCampos} = require('../middlewares/validateCampos');
 const { validateJwt } = require('../middlewares/validateJwt');
@@ -29,6 +30,14 @@ router.post("/chagestatus",[
     check("available","No tienes el estado a cambiar").not().isEmpty(),
     validateCampos
 ],changeStatusProduct)
+
+router.post("/chagestatusNew",[
+    validateJwt,
+    check("id","No es un ID valido").isMongoId(),
+    check("id").custom(exitProductById),
+    check("isNew","No tienes el estado a cambiar").not().isEmpty(),
+    validateCampos
+],changeStatusIsNew)
 
 router.post("/upload-img",[
     validateJwt,
