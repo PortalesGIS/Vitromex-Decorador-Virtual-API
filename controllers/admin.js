@@ -18,7 +18,8 @@ const login = async(req,res=response)=>{
     res.json({
         ok:true,
         token,
-        msg:"entro"
+        msg:"entro",
+        name:admin.name
     })
 }
 
