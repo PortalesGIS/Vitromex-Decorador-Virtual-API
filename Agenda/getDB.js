@@ -28,13 +28,12 @@ const getDB = cron.schedule('* * * * * 5', () => {
             await addTypologies(productsOracleTypologies);
 
            await productsOracle.forEach(async (element) => {
-              const exist = await existProduct(element.CODIGO_ITEM)
-              if(!exist){
-                  console.log("agregado")
+              existProduct(element.CODIGO_ITEM, async (exist)=>{
+                if(!exist){
                   const format = getFormat(element)
                   const prod = new Product({...format});
                   const pr = await prod.save()
-                  console.log(pr._id)
+                  console.log(`agregado: ${pr._id}`)
                   const fav = new Favorite({_id:pr.id,total:0,dates:[]})
                   await fav.save();
                   const count = new Counter({_id:pr.id,total:0})
@@ -42,16 +41,17 @@ const getDB = cron.schedule('* * * * * 5', () => {
           }
           else{                                
           }
-          });
+              })
+              });
       }).catch(err =>console.log(err))
       console.log("fin")
   }
   
-  const existProduct= async(id)=>{
+  const existProduct= async(id, callback)=>{
     const exist = await Product.findOne({idFromOracle:id})
     if(exist)
-        return true;
-    else return false;
+    callback(true) ;
+    else  callback(false);
   }
 
   const filterDataNotDuplicate = (data)=>{
