@@ -1,4 +1,5 @@
 const { response, json } = require("express");
+const { burbuja } = require("../helpers/burbuja");
 const Favorite = require("../models/favorite");
 const User = require("../models/user");
 
@@ -12,8 +13,6 @@ const addPointFavorite = async(req,res=response)=>{
             msg:"el usuario ya lo tiene en favoritos"
         })
     }
-    
-
     const fav = await Favorite.findById(productId);
     await  fav.updateOne({total:fav.total+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]})
 
@@ -60,9 +59,19 @@ const getAllFavoritesUser = async (req,res=response)=>{
     })
 }
 
+const getFavoritesList = async (req,res=response)=>{
+    const list  = await Favorite.find()
+    const order = burbuja(list)
+    res.json({
+        msg:"ok",
+        list: order
+    })
+} 
+
 
 module.exports ={
     addPointFavorite,
     removePointFavorite,
-    getAllFavoritesUser
+    getAllFavoritesUser,
+    getFavoritesList
 }

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { addPointFavorite, removePointFavorite, getAllFavoritesUser } = require("../controllers/favorite");
+const { addPointFavorite, removePointFavorite, getAllFavoritesUser, getFavoritesList } = require("../controllers/favorite");
 const { existFavoriteId,exitUserById } = require("../helpers/db-validators");
 const { validateCampos } = require("../middlewares/validateCampos");
 
@@ -21,6 +21,8 @@ router.post('/remove/',[
     check("productId").custom(existFavoriteId),
     validateCampos
 ],removePointFavorite)
+
+router.get("/list",getFavoritesList)
 
 router.get('/:id',[
     check("id","No es un ID valido").isMongoId(),

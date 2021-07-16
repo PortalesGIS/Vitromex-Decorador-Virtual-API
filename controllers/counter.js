@@ -1,4 +1,5 @@
 const { response } = require("express");
+const { burbuja } = require("../helpers/burbuja");
 const Counter = require("../models/counter");
 
 const addPointCounter = async(req,res=response)=>{
@@ -15,6 +16,17 @@ const addPointCounter = async(req,res=response)=>{
         position:state.total+1
     })
 }
+
+const getCounterList = async (req,res=response)=>{
+    const list  = await Counter.find()
+    const order = burbuja(list)
+    res.json({
+        msg:"ok",
+        list: order
+    })
+} 
+
 module.exports ={
-    addPointCounter
+    addPointCounter,
+    getCounterList
 }

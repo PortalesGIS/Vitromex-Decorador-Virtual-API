@@ -1,7 +1,7 @@
 
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { userGet, userPost, userDelete } = require('../controllers/user');
+const { userGet, userPost, userDelete, numberOfUsers } = require('../controllers/user');
 const {validateCampos} = require('../middlewares/validateCampos');
 const {emailExist,exitUserById} = require('../helpers/db-validators')
 
@@ -23,8 +23,9 @@ router.delete('/:id',[
     check("id").custom(exitUserById),
     validateCampos
 ],userDelete)
-
 // 
+
+router.get("/total",numberOfUsers)
 
 router.get("/test", (req,res) => {    
     

@@ -1,6 +1,7 @@
 const {response } = require('express') ;
 const bcryptjs = require('bcryptjs');
 const User =require('../models/user');
+const user = require('../models/user');
 
 
 const userPost = async  (req,res = response) => {
@@ -68,10 +69,17 @@ const userDelete = async(req,res = response) => {
     })
 }
 
+const numberOfUsers = async(req,res=response)=>{
+    const total = await User.countDocuments({state:true})
+    res.json({
+        total
+    })
+}
 
 
 module.exports ={
     userGet,
     userPost,
-    userDelete
+    userDelete,
+    numberOfUsers
 }
