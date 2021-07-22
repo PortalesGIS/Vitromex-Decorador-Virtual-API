@@ -5,7 +5,13 @@ const User = require('../models/user')
 
 
 const emailExist = async (email = "") =>{
-    const exist = await User.findOne({email});
+    const exist = await User.findOne({email,platform:"vitromex"});
+    if(exist){
+        throw new Error("Email ya registrado")
+    }
+}
+const emailExistArko = async (email = "") =>{
+    const exist = await User.findOne({email,platform:"arko"});
     if(exist){
         throw new Error("Email ya registrado")
     }
@@ -43,5 +49,6 @@ module.exports = {
     exitUserById,
     exitProductById,
     existFavoriteId,
-    existShopById
+    existShopById,
+    emailExistArko
 }

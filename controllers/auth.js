@@ -6,11 +6,21 @@ const nodemailer = require('nodemailer');
 
 const login = async(req,res=response) =>{
 
+    loginGlobal("vitromex",req,res);
+    
+}
+const loginArko = async(req,res=response) =>{
+
+    loginGlobal("arko",req,res);
+    
+}
+
+const loginGlobal = async (platform,req,res=response)=>{
     const {email,password} = req.body;
 
     try {        
         // verificar si el email existe
-        const user = await User.findOne({email})
+        const user = await User.findOne({email,platform})
         if(!user){
             return res.status(400).json({
                 msg:"Ususario/password no son correctos"
@@ -23,7 +33,8 @@ const login = async(req,res=response) =>{
             })
         }
         // verificar password
-        const isValidPassword = bcryptjs.compareSync(password,user.password);
+        // const isValidPassword = bcryptjs.compareSync(password,user.password);
+        const isValidPassword = password === user.password
         if(!isValidPassword){
             return res.status(400).json({
                 msg:"Ususario/password no son correctos"
@@ -46,7 +57,6 @@ const login = async(req,res=response) =>{
             msg:"Algo salio mal hable con el administrador"
         })
     }
-    
 }
 
 const restorePassword = async(req,res=response) =>{
@@ -160,5 +170,6 @@ const sendEmailRestorePassword = (user)=>{
 
 module.exports ={
     login,
-    restorePassword
+    restorePassword,
+    loginArko
 }

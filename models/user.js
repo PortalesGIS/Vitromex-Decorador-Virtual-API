@@ -15,8 +15,7 @@ const UserSchema = Schema({
     },
     email:{
         type: 'string',
-        require:[true,"El correo es requerido"],
-        unique: true
+        require:[true,"El correo es requerido"]
     },
     password:{
         type: 'string',
@@ -29,6 +28,9 @@ const UserSchema = Schema({
         type: 'string',
     },
     city:{
+        type: 'string',
+    },
+    platform:{
         type: 'string',
     },
     state:{
