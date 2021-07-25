@@ -10,7 +10,7 @@ const addPointCounter = async(req,res=response)=>{
             msg:"no existe el id"
         })
     }
-    await state.updateOne({total:state.total+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]});
+    await state.updateOne({total:state.total+1,dates:[...state.dates,new Date().toISOString().slice(0,10)]});
     res.json({        
         msg:"Agregado correctamente",
         position:state.total+1
