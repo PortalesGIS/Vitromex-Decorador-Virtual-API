@@ -138,6 +138,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         const serie = new Serie({
           name:element.SERIE,
           typologie:element.DESC_TIPOLOGIA,
+          platform:(element.DESC_MARCA ==="VITROMEX")? 'vitromex':'arko',
           img:"https://random.imagecdn.app/300/300",
           render:"https://random.imagecdn.app/870/520",
           dateCreated:new Date().toISOString().slice(0,10)
@@ -154,11 +155,12 @@ const getDB = cron.schedule('* * * * * 5', () => {
       if(!exist){
         const typologie = new Typologies({
           name:element.DESC_TIPOLOGIA,
+          platform:(element.DESC_MARCA ==="VITROMEX")? 'vitromex':'arko',
           img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/typologies%2Ftipologia.png?alt=media&token=e5057344-040d-46e0-a0f2-776768e8ea14",          
           dateCreated:new Date().toISOString().slice(0,10)
         })
         await  typologie.save()
-        console.log(`Serie guardada: ${element.DESC_TIPOLOGIA}`)
+        console.log(`typologia guardada: ${element.DESC_TIPOLOGIA}`)
       }      
     })
   }

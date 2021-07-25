@@ -16,11 +16,14 @@ const SerieSchema = Schema({
     },
     typologie:{
         type: 'string',
+    },
+    platform:{
+        type: 'string',
     }
     
 })
 SerieSchema.methods.toJSON = function(){
-    const {__v,dateCreated, ...serie} = this.toObject();
+    const {__v,dateCreated,platform, ...serie} = this.toObject();
     return serie;
 
 }

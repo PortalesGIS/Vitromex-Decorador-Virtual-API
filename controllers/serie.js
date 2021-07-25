@@ -5,8 +5,15 @@ const Serie = require("../models/serie");
 
 // este NO regresa el campo "dateCreated"
 const getAllSeries =async (req,res = response) => {
-    const serie =await Serie.find();
-    const total = await Serie.countDocuments();
+    const serie =await Serie.find({platform:"vitromex"});
+    const total = await Serie.countDocuments({platform:"vitromex"});
+    res.json({total,
+        serie
+    })
+}
+const getAllSeriesArko =async (req,res = response) => {
+    const serie =await Serie.find({platform:"arko"});
+    const total = await Serie.countDocuments({platform:"arko"});
     res.json({total,
         serie
     })
@@ -15,6 +22,23 @@ const getAllSeries =async (req,res = response) => {
 // este regresa el campo "dateCreated"
 const getAllSeriesCMS =async (req,res = response) => {
     const ie =await Serie.find();
+    const serie = []
+    ie.forEach(elm=>{
+        serie.push( {
+            name:elm.name,               
+            img:elm.img,
+            _id:elm._id,
+            dateCreated:elm.dateCreated,
+            render:elm.render
+         } )
+     })
+    const total = await Serie.countDocuments();
+    res.json({total,
+       serie
+    })
+}
+const getAllSeriesCMSArko =async (req,res = response) => {
+    const ie =await Serie.find({platform:"vitromex"});
     const serie = []
     ie.forEach(elm=>{
         serie.push( {
@@ -72,5 +96,7 @@ const uploadAzureImg = async (file,blob, callBack)=>{
 module.exports={
     getAllSeries,
     getAllSeriesCMS,
-    uploadSerieImg
+    uploadSerieImg,
+    getAllSeriesArko,
+    getAllSeriesCMSArko
 }

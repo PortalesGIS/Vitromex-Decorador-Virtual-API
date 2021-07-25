@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { getAllSeries, getAllSeriesCMS, uploadSerieImg } = require("../controllers/serie");
+const { getAllSeries, getAllSeriesCMS, uploadSerieImg, getAllSeriesArko, getAllSeriesCMSArko } = require("../controllers/serie");
 const { validateCampos } = require("../middlewares/validateCampos");
 const { validateJwt } = require("../middlewares/validateJwt");
 
@@ -10,6 +10,11 @@ router.get("/",
 getAllSeries
 );
 router.get("/cms",getAllSeriesCMS
+);
+router.get("/arko",
+getAllSeriesArko
+);
+router.get("/cms/arko",getAllSeriesCMSArko
 );
 
 router.post("/upload-img",[

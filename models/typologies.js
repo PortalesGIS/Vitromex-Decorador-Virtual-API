@@ -10,7 +10,10 @@ const TypologiesSchema = Schema({
     },
     dateCreated:{
         type: 'string',
-    }
+    },
+    platform:{
+        type: 'string',
+    },
 })
 TypologiesSchema.methods.toJSON = function(){
     const {__v,dateCreated, ...serie} = this.toObject();
