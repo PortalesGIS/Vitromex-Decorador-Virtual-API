@@ -9,6 +9,9 @@ const FavoriteSchema = Schema({
     },
     dates:{
         type:Array,
+    },
+    platform:{
+        type: 'string',
     }
 
 })

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { addPointFavorite, removePointFavorite, getAllFavoritesUser, getFavoritesList } = require("../controllers/favorite");
+const { addPointFavorite, removePointFavorite, getAllFavoritesUser, getFavoritesList, getFavoritesListArko } = require("../controllers/favorite");
 const { existFavoriteId,exitUserById } = require("../helpers/db-validators");
 const { validateCampos } = require("../middlewares/validateCampos");
 
@@ -23,6 +23,7 @@ router.post('/remove/',[
 ],removePointFavorite)
 
 router.get("/list",getFavoritesList)
+router.get("/list/arko",getFavoritesListArko)
 
 router.get('/:id',[
     check("id","No es un ID valido").isMongoId(),

@@ -6,8 +6,13 @@ const CounterSchema = Schema({
     },
     total:{
         type: Number,
+    },
+    dates:{
+        type:Array,
+    },
+    platform:{
+        type: 'string',
     }
-
 })
 
 module.exports = model("Counter",CounterSchema);

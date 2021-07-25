@@ -60,7 +60,15 @@ const getAllFavoritesUser = async (req,res=response)=>{
 }
 
 const getFavoritesList = async (req,res=response)=>{
-    const list  = await Favorite.find()
+    const list  = await Favorite.find({platform:"vitromex"})
+    const order = burbuja(list)
+    res.json({
+        msg:"ok",
+        list: order
+    })
+} 
+const getFavoritesListArko = async (req,res=response)=>{
+    const list  = await Favorite.find({platform:"arko"})
     const order = burbuja(list)
     res.json({
         msg:"ok",
@@ -73,5 +81,6 @@ module.exports ={
     addPointFavorite,
     removePointFavorite,
     getAllFavoritesUser,
-    getFavoritesList
+    getFavoritesList,
+    getFavoritesListArko
 }

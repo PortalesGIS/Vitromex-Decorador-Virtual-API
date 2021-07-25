@@ -34,9 +34,15 @@ const getDB = cron.schedule('* * * * * 5', () => {
                   const prod = new Product({...format});
                   const pr = await prod.save()
                   console.log(`agregado: ${pr._id}`)
-                  const fav = new Favorite({_id:pr.id,total:0,dates:[]})
+                  const fav = new Favorite({_id:pr.id,
+                    total:0,dates:[],
+                    platform:(element.DESC_MARCA ==="VITROMEX")? 'vitromex':'arko',
+                  })
                   await fav.save();
-                  const count = new Counter({_id:pr.id,total:0})
+                  const count = new Counter({_id:pr.id,
+                    total:0,dates:[],
+                    platform:(element.DESC_MARCA ==="VITROMEX")? 'vitromex':'arko',
+                  })
                   await count.save();
           }
           else{                                

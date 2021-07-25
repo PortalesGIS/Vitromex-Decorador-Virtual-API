@@ -10,7 +10,7 @@ const addPointCounter = async(req,res=response)=>{
             msg:"no existe el id"
         })
     }
-    await state.updateOne({total:state.total+1});
+    await state.updateOne({total:state.total+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]});
     res.json({        
         msg:"Agregado correctamente",
         position:state.total+1
@@ -25,8 +25,17 @@ const getCounterList = async (req,res=response)=>{
         list: order
     })
 } 
+const getCounterListArko = async (req,res=response)=>{
+    const list  = await Counter.find({platform:"arko"})
+    const order = burbuja(list)
+    res.json({
+        msg:"ok",
+        list: order
+    })
+} 
 
 module.exports ={
     addPointCounter,
-    getCounterList
+    getCounterList,
+    getCounterListArko
 }
