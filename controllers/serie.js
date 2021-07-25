@@ -38,7 +38,7 @@ const getAllSeriesCMS =async (req,res = response) => {
     })
 }
 const getAllSeriesCMSArko =async (req,res = response) => {
-    const ie =await Serie.find({platform:"vitromex"});
+    const ie =await Serie.find({platform:"arko"});
     const serie = []
     ie.forEach(elm=>{
         serie.push( {
