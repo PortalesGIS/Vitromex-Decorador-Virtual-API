@@ -115,7 +115,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         name:name.trim(),
         albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",
         normal:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/normal_3.jpg?alt=media&token=ac615096-5f08-4433-9bf5-e0d85cdbb034",
-        roughness:"",
+        roughness:(elem.BRILLO ==="BR")?'1':'0',
         smallPicture:"https://random.imagecdn.app/300/300",        
         sized:elem.FORMATO,
         isNewProduct:true,//:TODO dfsd
