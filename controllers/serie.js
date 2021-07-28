@@ -5,15 +5,15 @@ const Serie = require("../models/serie");
 
 // este NO regresa el campo "dateCreated"
 const getAllSeries =async (req,res = response) => {
-    const serie =await Serie.find({platform:"vitromex"});
-    const total = await Serie.countDocuments({platform:"vitromex"});
+    const serie =await Serie.find({platform:"vitromex",available:true});
+    const total = await Serie.countDocuments({platform:"vitromex",available:true});
     res.json({total,
         serie
     })
 }
 const getAllSeriesArko =async (req,res = response) => {
-    const serie =await Serie.find({platform:"arko"});
-    const total = await Serie.countDocuments({platform:"arko"});
+    const serie =await Serie.find({platform:"arko",available:true});
+    const total = await Serie.countDocuments({platform:"arko",available:true});
     res.json({total,
         serie
     })

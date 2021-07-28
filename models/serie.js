@@ -5,6 +5,10 @@ const SerieSchema = Schema({
         type: 'string',
         require:[true,"El nombre es requerido"]
     },
+    available:{
+        type:Boolean,
+        default:true
+    },
     img:{
         type: 'string',
     },
@@ -23,7 +27,7 @@ const SerieSchema = Schema({
     
 })
 SerieSchema.methods.toJSON = function(){
-    const {__v,dateCreated,platform, ...serie} = this.toObject();
+    const {__v,dateCreated,platform,available, ...serie} = this.toObject();
     return serie;
 
 }

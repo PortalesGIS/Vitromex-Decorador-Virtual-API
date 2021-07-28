@@ -2,7 +2,7 @@ const azure = require('azure-storage');
 const { v4: uuidv4 } = require('uuid');
 const {response } = require('express') ;
 const Product = require('../models/product');
-
+const Serie = require("../models/serie");
 
 
 const productGet =async (req,res = response) => {
@@ -67,10 +67,33 @@ const changeStatusProduct = async(req,res = response) =>{
     const {id,available} = req.body
     const product = await Product.findById(id)
     await product.updateOne({available})
+    verifyAndUploadStatusSerie(product,available)
     res.json({
         msg:"status cambio",
-
     })
+}
+
+const verifyAndUploadStatusSerie = async(product,available)=>{
+    const ser = Serie.find({name:product.serie})   
+    if(available === true || available === "true"){
+       await ser.updateOne({available:true})
+       console.log("serie esta en true")
+    }
+    else{
+        // TODO: optimizar 
+        const exist =await Product.find({serie:product.serie})
+        let numberProducts = exist.length
+        console.log("products:" + numberProducts)
+        exist.forEach((prodct)=>{
+            if(prodct.available === false){
+                numberProducts--
+            }
+        })
+        if(numberProducts <= 0){
+            await ser.updateOne({available:false})
+            console.log("series esta en false")
+        }
+    }
 }
 
 const changeStatusIsNew = async(req,res = response) =>{
