@@ -23,8 +23,7 @@ const SerieSchema = Schema({
     },
     platform:{
         type: 'string',
-    }
-    
+    },
 })
 SerieSchema.methods.toJSON = function(){
     const {__v,dateCreated,platform,available, ...serie} = this.toObject();

@@ -130,9 +130,9 @@ const getDB = cron.schedule('* * * * * 5', () => {
         pzasXpallet:elem.PZASXPALLET,
         aplications:[],
         renders:[
-          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
-          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
-          "https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/renders%2FImagen1-panda.jpg?alt=media&token=21f92da2-512b-441b-86d0-cf5a8c10bd08",
+          "https://random.imagecdn.app/872/518",
+          "https://random.imagecdn.app/872/520",
+          "https://random.imagecdn.app/872/515",
         ]
     }
   }
