@@ -2,13 +2,13 @@ const cron = require('node-cron');
 const fetch = require('node-fetch');
 const Product = require('../models/product')
 const Favorite = require('../models/favorite')
+const Shop = require('../models/shop');
 const Counter = require('../models/counter')
 const Serie = require('../models/serie')
 const Typologies = require('../models/typologies')
 const getDB = cron.schedule('* * * * * 5', () => {
     // ActualizarDB();
   });
-
 
   const ActualizarDB = async() => {
       console.log("empieza a actualizar la DB");
@@ -19,7 +19,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         .then((res) =>res.json())
         .then(async(response)=>{
             //   console.log(response.db.result.P_InfoProductos_RowSet)
-            const productsOracle = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet);
+            const productsOracle = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet,"CODIGO_ITEM");
 
             const productsOracleSeries = filterDataNotDuplicateSeries(response.db.result.P_InfoProductos_RowSet);
             await addSeries(productsOracleSeries);
@@ -50,7 +50,34 @@ const getDB = cron.schedule('* * * * * 5', () => {
               })
               });
       }).catch(err =>console.log(err))
-      console.log("fin")
+      console.log("fin productos")
+      // fetch("http://localhost:8080/api/test/store",{
+      //   method: 'GET',
+      //   headers: { 'Content-Type': 'application/json' },
+      // })
+      // .then(res=>res.json())
+      // .then(async(response)=>{
+      //   await Shop.collection.deleteMany({})
+      //   const tiendas = response.db.data
+      //   tiendas.forEach(async (element)=>{
+      //     const store = new Shop({
+      //       name:element.Nombre,
+      //       country:element.pais,
+      //       state:element.Estado,
+      //       city:element.Municipio,
+      //       suburb: element.colonia,
+      //       street: element.Calle,
+      //       num: element.numero,
+      //       phone: element.TelefonoTienda,
+      //       status: ((element.Latitud!='' && element.Longitud!='') && element.Nombre!='')?true:false,
+      //       lat: element.Latitud,
+      //       lng: element.Longitud,
+      //       dateCreated:new Date().toISOString().slice(0,10),
+      //     })
+      //     await store.save()
+      //     console.log("tienda guardada:"+ element.Nombre)
+      //   })
+      // })
   }
   
   const existProduct= async(id, callback)=>{
@@ -60,12 +87,12 @@ const getDB = cron.schedule('* * * * * 5', () => {
     else  callback(false);
   }
 
-  const filterDataNotDuplicate = (data)=>{
+  const filterDataNotDuplicate = (data,camp)=>{
     const arrValid =[]
     const productsOracle = []
             data.forEach( (element) => {
-            if(arrValid.indexOf(element.CODIGO_ITEM) === -1){
-              arrValid.push(element.CODIGO_ITEM)
+            if(arrValid.indexOf(element[camp]) === -1){
+              arrValid.push(element[camp])
               productsOracle.push(element)
             }
           })

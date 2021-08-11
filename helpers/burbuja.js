@@ -10,7 +10,7 @@ const burbuja = (lista) =>{
             }
         }
     }
-    return lista; // Mostramos, por consola, la lista ya ordenada
+    return lista; 
 }
 
 module.exports= {

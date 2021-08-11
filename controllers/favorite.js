@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 const addPointFavorite = async(req,res=response)=>{
     const {userId, productId} = req.body;
-
+    console.log("user: " + userId + "product: "+ productId);
     const state = await User.findById(userId)
     if(state.favorites.find((x)=>x===productId)){
         return res.status(400).json({
@@ -14,8 +14,8 @@ const addPointFavorite = async(req,res=response)=>{
         })
     }
     const fav = await Favorite.findById(productId);
-    await  fav.updateOne({total:fav.total+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]})
-
+    await  fav.updateOne({total:parseInt(parseInt(fav.total))+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]})
+    console.log(fav)
     const user = await User.findById(userId)
     const {favorites} = user;
     favorites.push(productId)
@@ -60,15 +60,16 @@ const getAllFavoritesUser = async (req,res=response)=>{
 }
 
 const getFavoritesList = async (req,res=response)=>{
-    const list  = await Favorite.find({platform:"vitromex"})
-    const order = burbuja(list)
+    const list  = await Favorite.find({platform:"vitromex"}).where("total").gte(1).exec()
+    console.log(list)
+    const order = burbuja(list)    
     res.json({
         msg:"ok",
         list: order
     })
 } 
 const getFavoritesListArko = async (req,res=response)=>{
-    const list  = await Favorite.find({platform:"arko"})
+    const list  = await Favorite.find({platform:"arko"}).where("total").gte(1).exec()
     const order = burbuja(list)
     res.json({
         msg:"ok",
