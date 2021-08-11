@@ -18,7 +18,7 @@ const addPointCounter = async(req,res=response)=>{
 }
 
 const getCounterList = async (req,res=response)=>{
-    const list  = await Counter.find()
+    const list  = await Counter.find({platform:"vitromex"}).where("total").gte(1).exec()
     const order = burbuja(list)
     res.json({
         msg:"ok",
@@ -26,7 +26,7 @@ const getCounterList = async (req,res=response)=>{
     })
 } 
 const getCounterListArko = async (req,res=response)=>{
-    const list  = await Counter.find({platform:"arko"})
+    const list  = await Counter.find({platform:"arko"}).where("total").gte(1).exec()
     const order = burbuja(list)
     res.json({
         msg:"ok",

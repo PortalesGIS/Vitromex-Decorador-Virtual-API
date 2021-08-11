@@ -4,9 +4,9 @@ const burbuja = (lista) =>{
     for (k = 1; k < n; k++) {
         for (i = 0; i < (n - k); i++) {
             if (lista[i].total < lista[i + 1].total) {
-                aux = lista[i].total;
-                lista[i].total = lista[i + 1].total;
-                lista[i + 1].total = aux;
+                aux = lista[i];
+                lista[i] = lista[i + 1];
+                lista[i + 1] = aux;
             }
         }
     }
