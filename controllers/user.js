@@ -86,7 +86,13 @@ const userDelete = async(req,res = response) => {
 }
 
 const numberOfUsers = async(req,res=response)=>{
-    const total = await User.countDocuments({state:true})
+    const total = await User.countDocuments({state:true,platform:"vitromex"})
+    res.json({
+        total
+    })
+}
+const numberOfUsersArko = async(req,res=response)=>{
+    const total = await User.countDocuments({state:true,platform:"arko"})
     res.json({
         total
     })
@@ -99,5 +105,6 @@ module.exports ={
     userDelete,
     numberOfUsers,
     userPostArko,
-    userGetArko
+    userGetArko,
+    numberOfUsersArko
 }

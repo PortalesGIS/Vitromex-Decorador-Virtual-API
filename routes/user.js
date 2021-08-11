@@ -1,7 +1,7 @@
 
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { userGet, userPost, userDelete, numberOfUsers,userPostArko, userGetArko } = require('../controllers/user');
+const { userGet, userPost, userDelete, numberOfUsers,userPostArko, userGetArko, numberOfUsersArko } = require('../controllers/user');
 const {validateCampos} = require('../middlewares/validateCampos');
 const {emailExist,emailExistArko,exitUserById} = require('../helpers/db-validators')
 
@@ -35,6 +35,7 @@ router.delete('/:id',[
 ],userDelete)
 // 
 
-router.get("/total",numberOfUsers)
+router.get("/total/vitromex",numberOfUsers)
+router.get("/total/arko",numberOfUsersArko)
 
 module.exports =router;
