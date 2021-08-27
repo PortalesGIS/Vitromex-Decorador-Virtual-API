@@ -27,4 +27,6 @@ router.delete("/delete",[
     validateCampos
 ],deleteAdmin)
 
+
+
 module.exports = router

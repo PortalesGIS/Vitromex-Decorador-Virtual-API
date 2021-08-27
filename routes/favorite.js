@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { addPointFavorite, removePointFavorite, getAllFavoritesUser, getFavoritesList, getFavoritesListArko } = require("../controllers/favorite");
+const { addPointFavorite, removePointFavorite, getFavoritesFilterDate, getAllFavoritesUser, getFavoritesList, getFavoritesListArko } = require("../controllers/favorite");
 const { existFavoriteId,exitUserById } = require("../helpers/db-validators");
 const { validateCampos } = require("../middlewares/validateCampos");
 
@@ -25,11 +25,18 @@ router.post('/remove/',[
 router.get("/list",getFavoritesList)
 router.get("/list/arko",getFavoritesListArko)
 
+router.get("/date",[
+    check("start","Es necesario una fecha de inicio").not().isEmpty(),   
+    check("end","Es necesario una fecha final").not().isEmpty(), 
+    validateCampos      
+],getFavoritesFilterDate)
+
 router.get('/:id',[
     check("id","No es un ID valido").isMongoId(),
     check("id").custom(exitUserById),
     validateCampos
 ],getAllFavoritesUser)
+
 
 
 module.exports = router;

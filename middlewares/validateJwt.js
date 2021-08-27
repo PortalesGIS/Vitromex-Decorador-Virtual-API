@@ -14,7 +14,7 @@ const validateJwt = (req=request,res=response,next) =>{
         next();
     } catch (error) {
         res.status(401).json({
-            msg:"no valido"
+            msg:"key no valida"
         })
     }
 

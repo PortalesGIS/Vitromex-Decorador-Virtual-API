@@ -11,7 +11,7 @@ const login = async(req,res=response)=>{
             })
         }
         // TODO: peticion a su endpoint
-
+        // aqui pon tu servicio de laffsbfsdbfsf
         // JWT
         const token = await genJWT(admin._id);
         console.log("suponiendo que valido user and pass entoncs",{admin})

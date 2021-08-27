@@ -90,11 +90,17 @@ const getFavoritesListArko = async (req,res=response)=>{
     })
 } 
 
-
+const getFavoritesFilterDate = async (req,res=response)=>{
+    
+    res.json({
+        msg:"entro"
+    })
+}
 module.exports ={
     addPointFavorite,
     removePointFavorite,
     getAllFavoritesUser,
     getFavoritesList,
-    getFavoritesListArko
+    getFavoritesListArko,
+    getFavoritesFilterDate
 }
