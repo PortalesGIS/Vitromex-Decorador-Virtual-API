@@ -51,6 +51,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
               });
       }).catch(err =>console.log(err))
       console.log("fin productos")
+      // TODO: eliminar comentario en produccion 
       // fetch("http://localhost:8080/api/test/store",{
       //   method: 'GET',
       //   headers: { 'Content-Type': 'application/json' },
@@ -60,8 +61,10 @@ const getDB = cron.schedule('* * * * * 5', () => {
       //   await Shop.collection.deleteMany({})
       //   const tiendas = response.db.data
       //   tiendas.forEach(async (element)=>{
+      //     const assaraydistribuid = element.Distribuidor.split('-')
+      //     const name = assaraydistribuid[0] + ' - ' + element.Nombre
       //     const store = new Shop({
-      //       name:element.Nombre,
+      //       name:name,
       //       country:element.pais,
       //       state:element.Estado,
       //       city:element.Municipio,
@@ -75,7 +78,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
       //       dateCreated:new Date().toISOString().slice(0,10),
       //     })
       //     await store.save()
-      //     console.log("tienda guardada:"+ element.Nombre)
+      //     console.log("tienda guardada:"+ name)
       //   })
       // })
   }

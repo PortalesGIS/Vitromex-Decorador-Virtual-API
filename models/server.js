@@ -20,6 +20,7 @@ class Server {
         this.counterPath = "/api/counter";
         this.onboardingPath = "/api/onboarding";
         this.seriesPath = "/api/series";
+        this.analyticsPath = "/api/analytics"
         // router testing
         this.testPath = "/api/test";
 
@@ -80,6 +81,7 @@ class Server {
         this.app.use(this.onboardingPath,require("../routes/onboarding"));
         this.app.use(this.testPath,require("../routes/test"));
         this.app.use(this.seriesPath,require("../routes/series"));
+        this.app.use(this.analyticsPath,require("../routes/analytic"));
     }
 
     listen(){
