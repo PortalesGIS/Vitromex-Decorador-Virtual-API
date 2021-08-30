@@ -152,7 +152,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
     return {
         dateCreated:new Date().toISOString().slice(0,10),
         idFromOracle:elem.CODIGO_ITEM,
-        available:true, //cambiar
+        available:true, //TODO: cambiar  falso siempre que llega uno nuevo
         description:elem.DESCRIPTION,
         name:name.trim(),
         albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",

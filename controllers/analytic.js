@@ -2,6 +2,21 @@ const { response } = "express";
 
 const Analytic = require("../models/analytic");
 
+const getVisitsToPlatform = async(req, res=response)=>{
+    const {platform} = req.params;
+    if(platform === 'web' || platform === 'ios' || platform === 'android' ){
+        const result = await Analytic.findOne({name:platform})
+        res.json({
+            result
+        })
+    }
+    else{
+        res.status(404).json({
+            error: "plataforma no encontrada"
+        })
+    }
+}
+
  const addPointToPlatformNewDevice= async (req,res=response)=>{
 
     const {platform} = req.body
@@ -30,5 +45,6 @@ const addPointToSpaceSelected = async (req,res=response) =>{
 
 module.exports={
     addPointToPlatformNewDevice,
-    addPointToSpaceSelected
+    addPointToSpaceSelected,
+    getVisitsToPlatform
 }
