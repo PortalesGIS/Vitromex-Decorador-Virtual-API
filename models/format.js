@@ -4,6 +4,9 @@ const FormatSchema = Schema({
     id:{
         type: 'string',
     },
+    format:{
+        type: 'string',
+    },
     rounded:{
         type: 'string',
     }

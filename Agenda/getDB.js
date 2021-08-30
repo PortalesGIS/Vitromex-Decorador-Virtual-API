@@ -6,6 +6,8 @@ const Shop = require('../models/shop');
 const Counter = require('../models/counter')
 const Serie = require('../models/serie')
 const Typologies = require('../models/typologies')
+const Format = require("../models/format");
+const format = require('../models/format');
 const getDB = cron.schedule('* * * * * 5', () => {
     // ActualizarDB();
   });
@@ -27,10 +29,20 @@ const getDB = cron.schedule('* * * * * 5', () => {
             const productsOracleTypologies = filterDataNotDuplicateTypologies(response.db.result.P_InfoProductos_RowSet);
             await addTypologies(productsOracleTypologies);
 
+            const productOracleFormats = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet,"FORMATO");
+            await addFormats(productOracleFormats);
+
            await productsOracle.forEach(async (element) => {
               existProduct(element.CODIGO_ITEM, async (exist)=>{
                 if(!exist){
-                  const format = getFormat(element)
+                  // tomar el fomato correcto si es que existe
+                  let formatoProduct = element.FORMATO
+                  const formatExist = await Format.findOne({format:element.FORMATO})
+                  if(formatExist){
+                    formatoProduct = formatExist.rounded
+                  }
+                  // 
+                  const format = getFormatProduct(element,formatoProduct)
                   const prod = new Product({...format});
                   const pr = await prod.save()
                   console.log(`agregado: ${pr._id}`)
@@ -129,11 +141,11 @@ const getDB = cron.schedule('* * * * * 5', () => {
           return productsOracle;
   }
 
-
-  const getFormat = (elem)=>{
+  const getFormatProduct = (elem,formatoProduct)=>{
     const arr = elem.DESCRIPTION.split(" ")
     const end = arr.findIndex(el=>el==="CM")
     let name="";
+    
     for (let index = 1; index < end-1; index++) {
         name += arr[index]+" "
     }
@@ -147,7 +159,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         normal:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/normal_3.jpg?alt=media&token=ac615096-5f08-4433-9bf5-e0d85cdbb034",
         roughness:(elem.BRILLO ==="BR")?'1':'0',
         smallPicture:"https://random.imagecdn.app/300/300",        
-        sized:elem.FORMATO,
+        sized: formatoProduct,
         isNewProduct:true,//:TODO dfsd
         family:elem.FAMILIA,
         branding:elem.DESC_MARCA,
@@ -197,6 +209,20 @@ const getDB = cron.schedule('* * * * * 5', () => {
         })
         await  typologie.save()
         console.log(`typologia guardada: ${element.DESC_TIPOLOGIA}`)
+      }      
+    })
+  }
+
+  const addFormats =async(elements)=>{
+    elements.forEach(async (element) => {
+      const exist =await Format.findOne({format:element.FORMATO})
+      if(!exist){
+        const format = new Format({
+          format:element.FORMATO,
+          rounded:element.FORMATO
+        })
+        await  format.save()
+        console.log(`formato guardada: ${element.FORMATO}`)
       }      
     })
   }
