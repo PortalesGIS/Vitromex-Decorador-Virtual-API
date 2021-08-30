@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { addPointToPlatformNewDevice, addPointToSpaceSelected, getVisitsToPlatform } = require("../controllers/analytic");
+const { addPointToPlatformNewDevice, addPointToSpaceSelected, getVisitsToPlatform, getVisitsToPlatformArko } = require("../controllers/analytic");
 const { validateCampos } = require("../middlewares/validateCampos");
 
 const router = Router();
@@ -16,10 +16,14 @@ router.post('/visitspace',[
     validateCampos
 ], addPointToSpaceSelected)
 
-router.get('/getTotal/:platform',[
+router.get('/getTotal/vitromex/:platform',[
     check("platform","la plataforma es necesaria").not().isEmpty(),
     validateCampos
     ],getVisitsToPlatform)
+router.get('/getTotal/arko/:platform',[
+    check("platform","la plataforma es necesaria").not().isEmpty(),
+    validateCampos
+    ],getVisitsToPlatformArko)
 
 // router.get("/list",getCounterList)
 // router.get("/list/arko",getCounterListArko)

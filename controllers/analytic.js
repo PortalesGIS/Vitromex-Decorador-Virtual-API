@@ -5,7 +5,21 @@ const Analytic = require("../models/analytic");
 const getVisitsToPlatform = async(req, res=response)=>{
     const {platform} = req.params;
     if(platform === 'web' || platform === 'ios' || platform === 'android' ){
-        const result = await Analytic.findOne({name:platform})
+        const result = await Analytic.findOne({name:platform,platform:'vitromex'})
+        res.json({
+            result
+        })
+    }
+    else{
+        res.status(404).json({
+            error: "plataforma no encontrada"
+        })
+    }
+}
+const getVisitsToPlatformArko = async(req, res=response)=>{
+    const {platform} = req.params;
+    if(platform === 'web' || platform === 'ios' || platform === 'android' ){
+        const result = await Analytic.findOne({name:platform,platform:'arko'})
         res.json({
             result
         })
@@ -46,5 +60,6 @@ const addPointToSpaceSelected = async (req,res=response) =>{
 module.exports={
     addPointToPlatformNewDevice,
     addPointToSpaceSelected,
-    getVisitsToPlatform
+    getVisitsToPlatform,
+    getVisitsToPlatformArko,
 }
