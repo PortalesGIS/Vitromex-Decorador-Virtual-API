@@ -1,20 +1,35 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { addPointToPlatformNewDevice, addPointToSpaceSelected, getVisitsToPlatform, getVisitsToPlatformArko } = require("../controllers/analytic");
+const { addPointToPlatformNewDeviceVitromex,
+     addPointToSpaceSelectedVitromex,
+      getVisitsToPlatform,
+      getVisitsToPlatformArko,
+       addPointToPlatformNewDeviceARko, 
+       addPointToSpaceSelectedArko} = require("../controllers/analytic");
 const { validateCampos } = require("../middlewares/validateCampos");
 
 const router = Router();
 
-router.post('/newdevice',[
+router.post('/newdevice/vitromex',[
     check('platform','la plataforma del dispositivo es necesaria').not().isEmpty(),
     validateCampos
     ],
-    addPointToPlatformNewDevice)
+    addPointToPlatformNewDeviceVitromex)
+router.post('/newdevice/arko',[
+    check('platform','la plataforma del dispositivo es necesaria').not().isEmpty(),
+    validateCampos
+    ],
+    addPointToPlatformNewDeviceARko)
 
-router.post('/visitspace',[
+router.post('/visitspace/vitromex',[
     check('space','se necesita un espacio').not().isEmpty(),
     validateCampos
-], addPointToSpaceSelected)
+], addPointToSpaceSelectedVitromex)
+
+router.post('/visitspace/arko',[
+    check('space','se necesita un espacio').not().isEmpty(),
+    validateCampos
+], addPointToSpaceSelectedArko)
 
 router.get('/getTotal/vitromex/:platform',[
     check("platform","la plataforma es necesaria").not().isEmpty(),

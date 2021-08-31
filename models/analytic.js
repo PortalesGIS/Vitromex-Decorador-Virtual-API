@@ -6,7 +6,11 @@ const AnalyticSchema = Schema({
     },
     total:{
         type:Number,
-    }
+    },
+    platform:{
+        type: 'string',
+    },
+    objectSpaces:{}
 })
 
 module.exports = model("Analytic",AnalyticSchema);

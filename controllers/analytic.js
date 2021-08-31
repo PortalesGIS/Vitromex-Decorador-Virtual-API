@@ -31,8 +31,7 @@ const getVisitsToPlatformArko = async(req, res=response)=>{
     }
 }
 
- const addPointToPlatformNewDevice= async (req,res=response)=>{
-
+ const addPointToPlatformNewDeviceVitromex= async (req,res=response)=>{
     const {platform} = req.body
     if(platform !=='android' && platform !== 'ios' && platform !== 'web'){
         res.status(402).json({
@@ -40,26 +39,75 @@ const getVisitsToPlatformArko = async(req, res=response)=>{
         })
     }
     else{
-        const platformSelected = await Analytic.findOne({name:platform})
+        const platformSelected = await Analytic.findOne({name:platform,platform:"vitromex"})
         await platformSelected.updateOne({
             total:platformSelected.total+1 })
         res.json({
             msg:'agregado'
         })
     }
-        
+}
+ const addPointToPlatformNewDeviceARko= async (req,res=response)=>{
+    const {platform} = req.body
+    if(platform !=='android' && platform !== 'ios' && platform !== 'web'){
+        res.status(402).json({
+            error:'la plataforma no se ecuentra'
+        })
+    }
+    else{
+        const platformSelected = await Analytic.findOne({name:platform,platform:'arko'})
+        await platformSelected.updateOne({
+            total:platformSelected.total+1 })
+        res.json({
+            msg:'agregado'
+        })
+    }
 }
 
-const addPointToSpaceSelected = async (req,res=response) =>{
-    res.json({
-        msg:'ok'
-    })
+const addPointToSpaceSelectedVitromex = async (req,res=response) =>{
+    const {space} =  req.body
+    if(space==='banio' || space==='sala' || space==='comedor' ||space==='cocina' ||space==='fachada'){
+        const spacesSelected =await Analytic.findOne({name:'space_more_visited',platform:'vitromex'})
+        const spaces = spacesSelected.objectSpaces
+        spaces[space].total++ 
+       await spacesSelected.updateOne({objectSpaces:spaces})
+        res.json({
+            msg:'Actualizado!',
+            
+        })
+    }
+    else{
+        res.status(404).json({
+            error:'no se encontro el espacio enviado revisa los espacios validos'
+        })
+    }
+}
+const addPointToSpaceSelectedArko = async (req,res=response) =>{
+    const {space} =  req.body
+    if(space==='banio' || space==='sala' || space==='comedor' ||space==='cocina' ||space==='fachada'){
+        const spacesSelected =await Analytic.findOne({name:'space_more_visited',platform:'arko'})
+        const spaces = spacesSelected.objectSpaces
+        spaces[space].total++ 
+       await spacesSelected.updateOne({objectSpaces:spaces})
+        res.json({
+            msg:'Actualizado!',
+            
+        })
+    }
+    else{
+        res.status(404).json({
+            error:'no se encontro el espacio enviado revisa los espacios validos'
+        })
+    }
 }
 
 
 module.exports={
-    addPointToPlatformNewDevice,
-    addPointToSpaceSelected,
+    addPointToSpaceSelectedVitromex,
     getVisitsToPlatform,
     getVisitsToPlatformArko,
+    addPointToPlatformNewDeviceVitromex,
+    addPointToSpaceSelectedArko,
+    addPointToPlatformNewDeviceARko
+
 }
