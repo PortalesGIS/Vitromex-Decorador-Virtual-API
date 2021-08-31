@@ -31,6 +31,19 @@ const getVisitsToPlatformArko = async(req, res=response)=>{
     }
 }
 
+const getSpacesMoreVisitedVitromex =async (rq,res=reponse)=>{
+    const spaces = await Analytic.findOne({name:'space_more_visited',platform:'vitromex'})
+    res.json({
+        spaces:spaces.objectSpaces
+    })
+}
+const getSpacesMoreVisitedarko =async (rq,res=reponse)=>{
+    const spaces = await Analytic.findOne({name:'space_more_visited',platform:'arko'})
+    res.json({
+        spaces:spaces.objectSpaces
+    })
+}
+
  const addPointToPlatformNewDeviceVitromex= async (req,res=response)=>{
     const {platform} = req.body
     if(platform !=='android' && platform !== 'ios' && platform !== 'web'){
@@ -102,12 +115,14 @@ const addPointToSpaceSelectedArko = async (req,res=response) =>{
 }
 
 
+
 module.exports={
     addPointToSpaceSelectedVitromex,
     getVisitsToPlatform,
     getVisitsToPlatformArko,
     addPointToPlatformNewDeviceVitromex,
     addPointToSpaceSelectedArko,
-    addPointToPlatformNewDeviceARko
-
+    addPointToPlatformNewDeviceARko,
+    getSpacesMoreVisitedVitromex,
+    getSpacesMoreVisitedarko
 }

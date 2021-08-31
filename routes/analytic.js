@@ -5,7 +5,9 @@ const { addPointToPlatformNewDeviceVitromex,
       getVisitsToPlatform,
       getVisitsToPlatformArko,
        addPointToPlatformNewDeviceARko, 
-       addPointToSpaceSelectedArko} = require("../controllers/analytic");
+       addPointToSpaceSelectedArko,
+       getSpacesMoreVisitedarko,
+       getSpacesMoreVisitedVitromex} = require("../controllers/analytic");
 const { validateCampos } = require("../middlewares/validateCampos");
 
 const router = Router();
@@ -21,15 +23,23 @@ router.post('/newdevice/arko',[
     ],
     addPointToPlatformNewDeviceARko)
 
-router.post('/visitspace/vitromex',[
+router.get('/visitspace/vitromex',[
     check('space','se necesita un espacio').not().isEmpty(),
     validateCampos
 ], addPointToSpaceSelectedVitromex)
 
-router.post('/visitspace/arko',[
+router.get('/visitspace/arko',[
     check('space','se necesita un espacio').not().isEmpty(),
     validateCampos
 ], addPointToSpaceSelectedArko)
+
+router.get('/countspaces/arko',
+getSpacesMoreVisitedarko    
+)
+router.get('/countspaces/vitromex',
+getSpacesMoreVisitedVitromex   
+)
+
 
 router.get('/getTotal/vitromex/:platform',[
     check("platform","la plataforma es necesaria").not().isEmpty(),
