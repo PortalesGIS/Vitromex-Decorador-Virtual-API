@@ -23,12 +23,12 @@ router.post('/newdevice/arko',[
     ],
     addPointToPlatformNewDeviceARko)
 
-router.get('/visitspace/vitromex',[
+router.post('/visitspace/vitromex',[
     check('space','se necesita un espacio').not().isEmpty(),
     validateCampos
 ], addPointToSpaceSelectedVitromex)
 
-router.get('/visitspace/arko',[
+router.post('/visitspace/arko',[
     check('space','se necesita un espacio').not().isEmpty(),
     validateCampos
 ], addPointToSpaceSelectedArko)
