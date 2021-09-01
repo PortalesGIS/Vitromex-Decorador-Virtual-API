@@ -14,12 +14,15 @@ const updateOneFormat =async(req,res=reponse)=>{
     const formatToUpdate =await Format.findById(id)
     if(formatToUpdate){
         await formatToUpdate.updateOne({rounded:rounded})
-        const productsToUpdate = await Product.find({sized:formatToUpdate.format}) 
+        const productsUpdated =[]
+        const productsToUpdate = await Product.find({sizedDefault:formatToUpdate.format}) 
         productsToUpdate.forEach(async(product) =>{
+            productsUpdated.push(product._id)
             await product.updateOne({sized:rounded})
         })
         res.json({
-            ok:"actualizado! "
+            ok:"actualizado!",
+            productsUpdated
         })
     }
     else{

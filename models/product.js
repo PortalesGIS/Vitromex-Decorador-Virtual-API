@@ -21,6 +21,9 @@ const ProductSchema = Schema({
     sized:{
         type: 'string',
     },
+    sizedDefault:{
+        type: 'string',
+    },
     smallPicture:{
         type: 'string',
     },
@@ -73,7 +76,7 @@ const ProductSchema = Schema({
     }
 })
 ProductSchema.methods.toJSON = function(){
-    const {idFromOracle, description, ...prod} = this.toObject();
+    const {idFromOracle,sizedDefault, description, ...prod} = this.toObject();
     return prod;
 
 }

@@ -160,6 +160,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         roughness:(elem.BRILLO ==="BR")?'1':'0',
         smallPicture:"https://random.imagecdn.app/300/300",        
         sized: formatoProduct,
+        sizedDefault:elem.FORMATO,
         isNewProduct:true,//:TODO dfsd
         family:elem.FAMILIA,
         branding:elem.DESC_MARCA,
