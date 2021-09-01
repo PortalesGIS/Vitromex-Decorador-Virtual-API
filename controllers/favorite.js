@@ -13,7 +13,23 @@ const addPointFavorite = async(req,res=response)=>{
         })
     }
     const fav = await Favorite.findById(productId);
-    await  fav.updateOne({total:parseInt(parseInt(fav.total))+1,dates:[...fav.dates,new Date().toISOString().slice(0,10)]})
+    const today = new Date().toISOString().slice(0,10)
+    const isfind = fav.dates.find(element=>element.date===today)
+    if(!isfind){
+        await  fav.updateOne({total:parseInt(parseInt(fav.total))+1,dates:[...fav.dates,
+            {
+                date:today,
+                total:1
+            }
+        ]})
+    }
+    else{
+        const index = fav.dates.findIndex(element=>element.date===today)
+        let updated = fav.dates
+        updated[index] = {date:today,total:updated[index].total+1}
+        await  fav.updateOne({total:parseInt(parseInt(fav.total))+1,dates:updated})
+
+    }
     const user = await User.findById(userId)
     const {favorites} = user;
     favorites.push(productId)

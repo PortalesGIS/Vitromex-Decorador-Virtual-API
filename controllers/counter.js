@@ -4,16 +4,32 @@ const Counter = require("../models/counter");
 
 const addPointCounter = async(req,res=response)=>{
     const {id} = req.params;
-    const state = await Counter.findById(id);
-    if(!state){
+    const productClik = await Counter.findById(id);
+    if(!productClik){
         res.status(400).json({        
             msg:"no existe el id"
         })
     }
-    await state.updateOne({total:state.total+1,dates:[...state.dates,new Date().toISOString().slice(0,10)]});
+    
+    const today = new Date().toISOString().slice(0,10)
+    const isfind = productClik.dates.find(element=>element.date===today)
+    if(!isfind){
+        await  productClik.updateOne({total:parseInt(parseInt(productClik.total))+1,dates:[...productClik.dates,
+            {
+                date:today,
+                total:1
+            }
+        ]})
+    }
+    else{
+        const index = productClik.dates.findIndex(element=>element.date===today)
+        let updated = productClik.dates
+        updated[index] = {date:today,total:updated[index].total+1}
+        await  productClik.updateOne({total:parseInt(parseInt(productClik.total))+1,dates:updated})
+    }
     res.json({        
         msg:"Agregado correctamente",
-        position:state.total+1
+        position:productClik.total+1
     })
 }
 
