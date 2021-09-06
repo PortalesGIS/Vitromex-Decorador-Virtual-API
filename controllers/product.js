@@ -80,10 +80,8 @@ const verifyAndUploadStatusSerie = async(product,available)=>{
        console.log("serie esta en true")
     }
     else{
-        // TODO: optimizar 
         const exist =await Product.find({serie:product.serie})
         let numberProducts = exist.length
-        console.log("products:" + numberProducts)
         exist.forEach((prodct)=>{
             if(prodct.available === false){
                 numberProducts--

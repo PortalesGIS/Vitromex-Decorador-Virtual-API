@@ -13,7 +13,9 @@ const getDB = cron.schedule('* * * * * 5', () => {
   });
 
   const ActualizarDB = async() => {
-      console.log("empieza a actualizar la DB");
+      console.log("empieza la actualizacion de DB");
+      // TODO: aqui modificar hacia donde apunta el link para
+      // solo cambiar el link 
       fetch("http://localhost:8080/api/test/db",{
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -65,6 +67,9 @@ const getDB = cron.schedule('* * * * * 5', () => {
       }).catch(err =>console.log(err))
       console.log("fin productos")
       // TODO: eliminar comentario en produccion 
+
+       // TODO: aqui modificar hacia donde apunta el link para
+      // solo cambiar el link 
       // fetch("http://localhost:8080/api/test/store",{
       //   method: 'GET',
       //   headers: { 'Content-Type': 'application/json' },
@@ -94,6 +99,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
       //     console.log("tienda guardada:"+ name)
       //   })
       // })
+
   }
   
   const existProduct= async(id, callback)=>{
@@ -162,7 +168,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
         smallPicture:"https://random.imagecdn.app/300/300",        
         sized: formatoProduct,
         sizedDefault:elem.FORMATO,
-        isNewProduct:true,//:TODO dfsd
+        isNewProduct:true,
         family:elem.FAMILIA,
         branding:elem.DESC_MARCA,
         textureWidth:0,

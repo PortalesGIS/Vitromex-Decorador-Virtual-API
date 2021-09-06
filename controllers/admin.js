@@ -1,6 +1,7 @@
 const { response } = require("express");
 const Admin = require("../models/admin")
 const { genJWT } = require("../helpers/jwt");
+const fetch = require('node-fetch');
 
 const login = async(req,res=response)=>{
     const {email,password} = req.body;
@@ -10,16 +11,41 @@ const login = async(req,res=response)=>{
                 msg:"Ususario no adminitdo"
             })
         }
-        // TODO: peticion a su endpoint
-        // aqui pon tu servicio de laffsbfsdbfsf
-        // JWT
-        const token = await genJWT(admin._id);
-        console.log("suponiendo que valido user and pass entoncs",{admin})
-    res.json({
-        ok:true,
-        token,
-        msg:"entro",
-        name:admin.name
+        // 
+        // TODO: aqui colorcar el End point para consultar su servicio de autentificacion 
+        // si la llamada es de tipo POST solo cambiar el link de abajo 
+        // si la llamada es de algun otro tipo o necesita mas parametros editar la peticion en la linea 38
+        consultingServiceClientAuthAdmin("http://localhost:8080/api/test/falsedb",email,password, async (response)=>{
+            // sutituir por si la variable bandera que verifique si la respuesta es correcta (id, response etc....)
+            if(response.ok){
+                const token = await genJWT(admin._id);
+                res.json({
+                    ok:true,
+                    token,
+                    msg:"entro",
+                    name:admin.name
+                })
+            }
+            else{
+                res.status(404).json({
+                    msg:"Ususario no adminitdo" 
+                })
+            }
+        })
+    }
+
+    const consultingServiceClientAuthAdmin = async (url,email,password,callback)=>{
+        fetch(url,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+        })
+        .then((res) =>res.json())
+        .then(async(response)=>{
+            callback(response)
     })
 }
 

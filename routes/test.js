@@ -3,6 +3,12 @@ const { Router } = require("express");
 
 const router = Router();
 
+router.post('/falseDB',(req,res=response)=>{
+    res.json({
+        ok: true,
+    })
+})
+
 router.get("/db",(req,res=response)=>{
     const db = JSON.parse(`{
         "message": "success",
