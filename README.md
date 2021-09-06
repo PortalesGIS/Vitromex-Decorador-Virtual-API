@@ -42,7 +42,7 @@ para firmar los JWT puede ser cualquier string
 `AZURE_STORAGE_CONNECTION_STRING`
 cadena de conexion para [azure Storage](https://experienceleague.adobe.com/docs/experience-platform/sources/ui-tutorials/create/cloud-storage/blob.html?lang=es) 
 
-### nombres de contenedores de imagenes
+### Nombres de contenedores de imagenes
 
 (Recomendado no cambiar)
 
@@ -52,8 +52,31 @@ cadena de conexion para [azure Storage](https://experienceleague.adobe.com/docs/
 `AZURE_BLOB_CONTAINER_APLICATIONS` = aplicaciones
 `AZURE_BLOB_CONTAINER_TYPOLOGIAS` = typologias
   
+## Ajustes en el codigo
 
-  ## API Reference
+por cuestiones de implementación algunos edpoints para hacer funcionar este api se necesitan sustituir dentro del Código 
+estos son los siguientes:
+- obtener productos de su DB (API REST) `/Agenda/getDB.js`
+- obtener las tiendas de su DB (API REST) `/Agenda/getDB.js`
+- validación de administradores (API REST) `/controllers/admin.js`
+- servicio de Mail  `/controllers/auth.js`
+
+Ejemplo (no funcional)
+```
+    // TODO: aqui modificar hacia donde apunta el link para obtener los productos de Oracle
+    // solo cambiar el link 
+    fetch("http://localhost:8080/api/test/db",{
+
+    })
+```
+cambiar a 
+```
+fetch("http://servicioparaobtenerproductos.com/getproduc",{
+
+    })
+```
+
+## API Reference
 
 #### Get all items-Vitromex
 
@@ -107,18 +130,18 @@ response:
 }
 ```
 
-## deploy
+# Despliegue a produccion
 
-To deploy this project run
-
-```bash
-  npm run deploy
-```
-
-### confuguracion de nginx
+el servidor de produccion se plena utilizar una maquina virtual de Azure. 
+para poder desplegar a este servidor se utilia GitLab 
+realizar un push a `main` con cambios 
+dentro de la maquina virtual realizar un pull a `main`
+## confuguracion de nginx
+el servidor ocupa `nginx` para desplegar realizar instalaciones y configuraciones
+- cofiguraciones basicas de nginx 
+- configurar el dominio
 
 configuracion para aceptar archivos de mas de 1 MB
-
 
 editar 
 

@@ -14,7 +14,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
 
   const ActualizarDB = async() => {
       console.log("empieza la actualizacion de DB");
-      // TODO: aqui modificar hacia donde apunta el link para
+      // TODO: aqui modificar hacia donde apunta el link para obtener los productos de Oracle
       // solo cambiar el link 
       fetch("http://localhost:8080/api/test/db",{
           method: 'GET',
