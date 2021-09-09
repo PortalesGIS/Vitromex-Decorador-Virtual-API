@@ -43,8 +43,8 @@ router.post("/chagestatusNew",[
 // delete img 
 router.post("/deleteimg",[
     validateJwt,
-    check("id","No tienes el estado a cambiar").not().isEmpty(),
-    check("positionImg","No tienes el estado a cambiar").not().isEmpty(),
+    check("id","no tienes el id del producto").not().isEmpty(),
+    check("positionImg","No tienes la posicion a cambiar ").not().isEmpty(),
     check("id").custom(exitProductById),
     validateCampos
     ], deleteImgProduct)
