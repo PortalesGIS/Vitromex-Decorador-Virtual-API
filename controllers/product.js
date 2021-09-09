@@ -196,6 +196,24 @@ const getProductsDB = async (query) => {
     return [products,total];
 }
 
+const deleteImgProduct = async (req,res = response)=>{
+    const {id,positionImg} = req.body;
+    if(positionImg=== 1 || positionImg === 2){
+        const product = await Product.findById(id)
+        let images= product.renders
+        images[positionImg]=""
+        await product.updateOne({renders:images})
+        res.json({
+            ok: "imagen de producto eliminada"
+        })
+    }
+    else{
+        res.status(502).json({
+            error:"la posicion no se puede borrar"
+        })
+    }
+}
+
 
 module.exports={
     productGet,
@@ -208,5 +226,6 @@ module.exports={
     uploadProductImg,
     uploadProductImgRender,
     changeStatusIsNew,
-    uploadProductsOptions
+    uploadProductsOptions,
+    deleteImgProduct
 }

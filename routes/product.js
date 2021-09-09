@@ -7,7 +7,8 @@ const { productGet, getProductsArko, getProductsVitromex, getProductById,
     uploadProductImg, 
     uploadProductImgRender,
     uploadProductsOptions,
-    changeStatusIsNew} = require('../controllers/product');
+    changeStatusIsNew,
+    deleteImgProduct} = require('../controllers/product');
 const { exitProductById } = require('../helpers/db-validators');
 const {validateCampos} = require('../middlewares/validateCampos');
 const { validateJwt } = require('../middlewares/validateJwt');
@@ -38,6 +39,16 @@ router.post("/chagestatusNew",[
     check("isNew","No tienes el estado a cambiar").not().isEmpty(),
     validateCampos
 ],changeStatusIsNew)
+
+// delete img 
+router.post("/deleteimg",[
+    validateJwt,
+    check("id","No tienes el estado a cambiar").not().isEmpty(),
+    check("positionImg","No tienes el estado a cambiar").not().isEmpty(),
+    check("id").custom(exitProductById),
+    validateCampos
+    ], deleteImgProduct)
+// 
 
 router.post("/upload-img",[
     validateJwt,
