@@ -23,14 +23,5 @@ router.post("/restorePassword",[
 ],restorePassword)
 
 
-router.get("/imagenDeUsuario",
-    (req,res)=>{
-        console.log(req.headers['x-forwarded-for'] || req.connection.remoteAddress)
-        res.json(
-            {mensaje:""}
-        )
-    }
-)
-
 
 module.exports = router;
