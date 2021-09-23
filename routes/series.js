@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { getAllSeries, getAllSeriesCMS, uploadSerieImg, getAllSeriesArko, getAllSeriesCMSArko } = require("../controllers/serie");
+const { getAllSeries, getAllSeriesCMS, uploadSerieImg, getAllSeriesArko, getAllSeriesCMSArko, disableAllseries } = require("../controllers/serie");
 const { validateCampos } = require("../middlewares/validateCampos");
 const { validateJwt } = require("../middlewares/validateJwt");
 
@@ -22,5 +22,7 @@ router.post("/upload-img",[
     check("id","No es un ID valido").isMongoId(),       
     validateCampos
 ],uploadSerieImg)
+
+router.get('/disabledall',[],disableAllseries)
 
 module.exports = router;

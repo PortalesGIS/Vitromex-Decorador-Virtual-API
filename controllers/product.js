@@ -21,6 +21,13 @@ const productGet =async (req,res = response) => {
         products
     })
 }
+const disableAll =async (req,res = response) => {
+    await Product.updateMany({available:true},{available:false})    
+    console.log("disbaled all products")
+    res.json({
+        deshabilidtados:"todos"
+    })
+}
 
 
 const getProductsArko= async (req,res=response)=>{
@@ -227,5 +234,6 @@ module.exports={
     uploadProductImgRender,
     changeStatusIsNew,
     uploadProductsOptions,
-    deleteImgProduct
+    deleteImgProduct,
+    disableAll
 }

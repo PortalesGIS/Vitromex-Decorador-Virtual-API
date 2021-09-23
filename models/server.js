@@ -39,7 +39,7 @@ class Server {
     async conectDB(){
         await dbConnection()
        // actualizar DB servicio de oracle
-        // getDB.start();
+        getDB.start();
         ActualizarDB();
     }
 

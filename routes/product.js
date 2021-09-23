@@ -8,7 +8,8 @@ const { productGet, getProductsArko, getProductsVitromex, getProductById,
     uploadProductImgRender,
     uploadProductsOptions,
     changeStatusIsNew,
-    deleteImgProduct} = require('../controllers/product');
+    deleteImgProduct,
+    disableAll} = require('../controllers/product');
 const { exitProductById } = require('../helpers/db-validators');
 const {validateCampos} = require('../middlewares/validateCampos');
 const { validateJwt } = require('../middlewares/validateJwt');
@@ -80,5 +81,7 @@ router.get("/one/:id",[
     check("id").custom(exitProductById),
     validateCampos
 ],getProductById)
+
+router.get('/disabledall',[],disableAll)
 
 module.exports =router;

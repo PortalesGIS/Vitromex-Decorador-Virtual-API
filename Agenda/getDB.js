@@ -8,8 +8,9 @@ const Serie = require('../models/serie')
 const Typologies = require('../models/typologies')
 const Format = require("../models/format");
 const format = require('../models/format');
-const getDB = cron.schedule('* * * * * 5', () => {
-    // ActualizarDB();
+
+const getDB = cron.schedule('0 1 * * *', () => {
+    ActualizarDB();
   });
 
   const ActualizarDB = async() => {
@@ -66,39 +67,37 @@ const getDB = cron.schedule('* * * * * 5', () => {
               });
       }).catch(err =>console.log(err))
       console.log("fin productos")
-      // TODO: eliminar comentario en produccion 
-
        // TODO: aqui modificar hacia donde apunta el link para
       // solo cambiar el link 
-      // fetch("http://localhost:8080/api/test/store",{
-      //   method: 'GET',
-      //   headers: { 'Content-Type': 'application/json' },
-      // })
-      // .then(res=>res.json())
-      // .then(async(response)=>{
-      //   await Shop.collection.deleteMany({})
-      //   const tiendas = response.db.data
-      //   tiendas.forEach(async (element)=>{
-      //     const assaraydistribuid = element.Distribuidor.split('-')
-      //     const name = assaraydistribuid[0] + ' - ' + element.Nombre
-      //     const store = new Shop({
-      //       name:name,
-      //       country:element.pais,
-      //       state:element.Estado,
-      //       city:element.Municipio,
-      //       suburb: element.colonia,
-      //       street: element.Calle,
-      //       num: element.numero,
-      //       phone: element.TelefonoTienda,
-      //       status: ((element.Latitud!='' && element.Longitud!='') && element.Nombre!='')?true:false,
-      //       lat: element.Latitud,
-      //       lng: element.Longitud,
-      //       dateCreated:new Date().toISOString().slice(0,10),
-      //     })
-      //     await store.save()
-      //     console.log("tienda guardada:"+ name)
-      //   })
-      // })
+      fetch("http://localhost:8080/api/test/store",{
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then(res=>res.json())
+      .then(async(response)=>{
+        await Shop.collection.deleteMany({})
+        const tiendas = response.db.data
+        tiendas.forEach(async (element)=>{
+          const assaraydistribuid = element.Distribuidor.split('-')
+          const name = assaraydistribuid[0] + ' - ' + element.Nombre
+          const store = new Shop({
+            name:name,
+            country:element.pais,
+            state:element.Estado,
+            city:element.Municipio,
+            suburb: element.colonia,
+            street: element.Calle,
+            num: element.numero,
+            phone: element.TelefonoTienda,
+            status: ((element.Latitud!='' && element.Longitud!='') && element.Nombre!='')?true:false,
+            lat: element.Latitud,
+            lng: element.Longitud,
+            dateCreated:new Date().toISOString().slice(0,10),
+          })
+          await store.save()
+          console.log("tienda guardada:"+ name)
+        })
+      })
 
   }
   
@@ -159,7 +158,7 @@ const getDB = cron.schedule('* * * * * 5', () => {
     return {
         dateCreated:new Date().toISOString().slice(0,10),
         idFromOracle:elem.CODIGO_ITEM,
-        available:true, //TODO: cambiar  falso siempre que llega uno nuevo
+        available:false, //TODO: cambiar  falso siempre que llega uno nuevo
         description:elem.DESCRIPTION,
         name:name.trim(),
         albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",

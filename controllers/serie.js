@@ -3,6 +3,15 @@ const { v4: uuidv4 } = require('uuid');
 const { response } = require("express");
 const Serie = require("../models/serie");
 
+const disableAllseries =async (req,res = response) => {
+    await Serie.updateMany({available:true},{available:false})    
+    console.log("disbaled all series")
+    res.json({
+        deshabilidtados:"todos series"
+    })
+}
+
+
 // este NO regresa el campo "dateCreated"
 const getAllSeries =async (req,res = response) => {
     const serie =await Serie.find({platform:"vitromex",available:true});
@@ -98,5 +107,6 @@ module.exports={
     getAllSeriesCMS,
     uploadSerieImg,
     getAllSeriesArko,
-    getAllSeriesCMSArko
+    getAllSeriesCMSArko,
+    disableAllseries
 }

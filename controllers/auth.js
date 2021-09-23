@@ -18,7 +18,6 @@ const loginArko = async(req,res=response) =>{
 
 const loginGlobal = async (platform,req,res=response)=>{
     const {email,password} = req.body;
-
     try {        
         // verificar si el email existe
         const user = await User.findOne({email,platform})
