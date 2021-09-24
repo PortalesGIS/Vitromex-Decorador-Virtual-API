@@ -33,15 +33,13 @@ const login = async(req,res=response)=>{
             }
         })
     }
-
     const consultingServiceClientAuthAdmin = async (url,email,password,callback)=>{
-        // https://fsdev.gis.com.mx/WSLoginDecorVtx/api/login/authenticate?Username=xxxxx&Password=xxxxx
         fetch(`${url}?Username=${email}&Password=${password}`,{
-            method: 'POST',
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })
         .then((res) =>{
-            if(res === "true"){
+            if(res.status === 200){
                 callback({ok:true})
             }            
             else{

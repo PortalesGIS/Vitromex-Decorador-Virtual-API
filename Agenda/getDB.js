@@ -23,16 +23,18 @@ const getDB = cron.schedule('0 1 * * *', () => {
         })
         .then((res) =>res.json())
         .then(async(response)=>{
-            //   console.log(response.db.result.P_InfoProductos_RowSet)
-            const productsOracle = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet,"CODIGO_ITEM");
+          console.log(response)
 
-            const productsOracleSeries = filterDataNotDuplicateSeries(response.db.result.P_InfoProductos_RowSet);
+            //   console.log(response.result.P_InfoProductos_RowSet)
+            const productsOracle = filterDataNotDuplicate(response.result.P_InfoProductos_RowSet,"CODIGO_ITEM");
+
+            const productsOracleSeries = filterDataNotDuplicateSeries(response.result.P_InfoProductos_RowSet);
             await addSeries(productsOracleSeries);
 
-            const productsOracleTypologies = filterDataNotDuplicateTypologies(response.db.result.P_InfoProductos_RowSet);
+            const productsOracleTypologies = filterDataNotDuplicateTypologies(response.result.P_InfoProductos_RowSet);
             await addTypologies(productsOracleTypologies);
 
-            const productOracleFormats = filterDataNotDuplicate(response.db.result.P_InfoProductos_RowSet,"FORMATO");
+            const productOracleFormats = filterDataNotDuplicate(response.result.P_InfoProductos_RowSet,"FORMATO");
             await addFormats(productOracleFormats);
 
            await productsOracle.forEach(async (element) => {
@@ -68,7 +70,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
       }).catch(err =>console.log(err))
       console.log(`opteniendo tiendas de: ${process.env.GET_TIENDAS}`);
 
-       // TODO: aqui modificar hacia donde apunta el link para
+       // TODO: aqui modificar hacia donde apunta el link para las tiendas 
       // solo cambiar el link 
       fetch(`${process.env.GET_TIENDAS}`,{
         method: 'GET',
@@ -77,7 +79,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
       .then(res=>res.json())
       .then(async(response)=>{
         await Shop.collection.deleteMany({})
-        const tiendas = response.db.data
+        const tiendas = response.data
         tiendas.forEach(async (element)=>{
           const assaraydistribuid = element.Distribuidor.split('-')
           const name = assaraydistribuid[0] + ' - ' + element.Nombre
