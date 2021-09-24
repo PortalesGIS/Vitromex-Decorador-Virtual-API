@@ -10,7 +10,7 @@ class Server {
 
     constructor(){
         this.app = express();
-        this.port = 443;
+        this.port = process.env.PORT;
         this.usersRoutePath ="/api/user";
         this.productsPath = "/api/product";
         this.authPath = "/api/auth";
