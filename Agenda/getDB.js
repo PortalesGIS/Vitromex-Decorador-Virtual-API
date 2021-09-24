@@ -17,7 +17,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
       console.log("empieza la actualizacion de DB");
       // TODO: aqui modificar hacia donde apunta el link para obtener los productos de Oracle
       // solo cambiar el link 
-      fetch("http://localhost:8080/api/test/db",{
+      fetch("http://localhost:443/api/test/db",{
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -69,7 +69,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
       console.log("fin productos")
        // TODO: aqui modificar hacia donde apunta el link para
       // solo cambiar el link 
-      fetch("http://localhost:8080/api/test/store",{
+      fetch("http://localhost:443/api/test/store",{
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
