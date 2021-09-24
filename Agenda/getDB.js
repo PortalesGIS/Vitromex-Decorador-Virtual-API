@@ -14,10 +14,10 @@ const getDB = cron.schedule('0 1 * * *', () => {
   });
 
   const ActualizarDB = async() => {
-      console.log("empieza la actualizacion de DB");
+      console.log(`opteniendo productos de: ${process.env.GET_PRODUCTS}`);
       // TODO: aqui modificar hacia donde apunta el link para obtener los productos de Oracle
       // solo cambiar el link 
-      fetch("http://localhost:8080/api/test/db",{
+      fetch(`${process.env.GET_PRODUCTS}`,{
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -66,11 +66,11 @@ const getDB = cron.schedule('0 1 * * *', () => {
               })
               });
       }).catch(err =>console.log(err))
-      console.log("fin productos")
+      console.log(`opteniendo tiendas de: ${process.env.GET_TIENDAS}`);
 
        // TODO: aqui modificar hacia donde apunta el link para
       // solo cambiar el link 
-      fetch("http://localhost:8080/api/test/store",{
+      fetch(`${process.env.GET_TIENDAS}`,{
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -162,10 +162,10 @@ const getDB = cron.schedule('0 1 * * *', () => {
         available:false, //TODO: cambiar  falso siempre que llega uno nuevo
         description:elem.DESCRIPTION,
         name:name.trim(),
-        albedo:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/albedo_3.jpg?alt=media&token=05b80b17-3d4d-4e46-8d7e-224b68c3ed12",
-        normal:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/normal_3.jpg?alt=media&token=ac615096-5f08-4433-9bf5-e0d85cdbb034",
+        albedo:"",
+        normal:"",
         roughness:(elem.BRILLO ==="BR")?'1':'0',
-        smallPicture:"https://random.imagecdn.app/300/300",        
+        smallPicture:"",        
         sized: formatoProduct,
         sizedDefault:elem.FORMATO,
         isNewProduct:true,
@@ -180,9 +180,9 @@ const getDB = cron.schedule('0 1 * * *', () => {
         pzasXpallet:elem.PZASXPALLET,
         aplications:[],
         renders:[
-          "https://random.imagecdn.app/872/518",
-          "https://random.imagecdn.app/872/520",
-          "https://random.imagecdn.app/872/515",
+          "",
+          "",
+          "",
         ]
     }
   }
@@ -195,8 +195,8 @@ const getDB = cron.schedule('0 1 * * *', () => {
           name:element.SERIE,
           typologie:element.DESC_TIPOLOGIA,
           platform:(element.DESC_MARCA ==="VITROMEX")? 'vitromex':'arko',
-          img:"https://random.imagecdn.app/300/300",
-          render:"https://random.imagecdn.app/870/520",
+          img:"",
+          render:"",
           dateCreated:new Date().toISOString().slice(0,10)
         })
         await  serie.save()
@@ -212,7 +212,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
         const typologie = new Typologies({
           name:element.DESC_TIPOLOGIA,
           platform:(element.DESC_MARCA ==="VITROMEX")? 'vitromex':'arko',
-          img:"https://firebasestorage.googleapis.com/v0/b/test-analitycs-simulador.appspot.com/o/typologies%2Ftipologia.png?alt=media&token=e5057344-040d-46e0-a0f2-776768e8ea14",          
+          img:"",          
           dateCreated:new Date().toISOString().slice(0,10)
         })
         await  typologie.save()

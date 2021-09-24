@@ -15,7 +15,7 @@ const login = async(req,res=response)=>{
         // TODO: aqui colorcar el End point para consultar su servicio de autentificacion 
         // si la llamada es de tipo POST solo cambiar el link de abajo 
         // si la llamada es de algun otro tipo o necesita mas parametros editar la peticion en la linea 38
-        consultingServiceClientAuthAdmin("http://localhost:8080/api/test/falsedb",email,password, async (response)=>{
+        consultingServiceClientAuthAdmin(`${process.env.POST_AUTH_ADMIN}`,email,password, async (response)=>{
             // sutituir por si la variable bandera que verifique si la respuesta es correcta (id, response etc....)
             if(response.ok){
                 const token = await genJWT(admin._id);
@@ -35,18 +35,19 @@ const login = async(req,res=response)=>{
     }
 
     const consultingServiceClientAuthAdmin = async (url,email,password,callback)=>{
-        fetch(url,{
+        // https://fsdev.gis.com.mx/WSLoginDecorVtx/api/login/authenticate?Username=xxxxx&Password=xxxxx
+        fetch(`${url}?Username=${email}&Password=${password}`,{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            }),
         })
-        .then((res) =>res.json())
-        .then(async(response)=>{
-            callback(response)
-    })
+        .then((res) =>{
+            if(res === "true"){
+                callback({ok:true})
+            }            
+            else{
+                callback({ok:false})
+            }
+        })
 }
 
 const getAllAdmins = async(req,res=response)=>{
