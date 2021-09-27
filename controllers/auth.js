@@ -85,17 +85,17 @@ const sendEmailRestorePassword = (user)=>{
     // TODO: aqui implementar el servicio de email para
     // se tiene que cambiar el trasporter a la plataform que utilizen 
     // documentacion: https://nodemailer.com/about/
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'decoradorvirtualvitromex@gmail.com',
-          pass: 'd8df1w1g5s13hu'
-        }
-      });
+    const transporter = nodemailer.createTransport({ 
+        host: 'smtp.office365.com',
+        port: '587',
+        auth: { user: '', pass: '' },
+        secureConnection: false,
+        tls: { ciphers: 'SSLv3' }
+    });
       const mailOptions = {
-        from: 'decoradorvirtualvitromex@gmail.com',
+        from: '',
         to: user.email,
-        subject: 'recuperar contraseña',
+        subject: 'Decorador Virtual recuperar contraseña',
         html:getTempleEmail(user)
       };
       transporter.sendMail(mailOptions, function(error, info){
