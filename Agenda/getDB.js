@@ -14,7 +14,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
   });
 
   const ActualizarDB = async() => {
-      console.log(`opteniendo productos de: ${process.env.GET_PRODUCTS}`);
+      console.log(`obteniendo productos de: ${process.env.GET_PRODUCTS}`);
       // TODO: aqui modificar hacia donde apunta el link para obtener los productos de Oracle
       // solo cambiar el link 
       fetch(`${process.env.GET_PRODUCTS}`,{
@@ -68,7 +68,7 @@ const getDB = cron.schedule('0 1 * * *', () => {
               })
               });
       }).catch(err =>console.log(err))
-      console.log(`opteniendo tiendas de: ${process.env.GET_TIENDAS}`);
+      console.log(`obteniendo tiendas de: ${process.env.GET_TIENDAS}`);
 
        // TODO: aqui modificar hacia donde apunta el link para las tiendas 
       // solo cambiar el link 
@@ -78,28 +78,30 @@ const getDB = cron.schedule('0 1 * * *', () => {
       })
       .then(res=>res.json())
       .then(async(response)=>{
-        await Shop.collection.deleteMany({})
         const tiendas = response.data
-        tiendas.forEach(async (element)=>{
-          const assaraydistribuid = element.Distribuidor.split('-')
-          const name = assaraydistribuid[0] + ' - ' + element.Nombre
-          const store = new Shop({
-            name:name,
-            country:element.pais,
-            state:element.Estado,
-            city:element.Municipio,
-            suburb: element.colonia,
-            street: element.Calle,
-            num: element.numero,
-            phone: element.TelefonoTienda,
-            status: ((element.Latitud!='' && element.Longitud!='') && element.Nombre!='')?true:false,
-            lat: element.Latitud,
-            lng: element.Longitud,
-            dateCreated:new Date().toISOString().slice(0,10),
+        if(tiendas){
+          await Shop.collection.deleteMany({})
+          tiendas.forEach(async (element)=>{
+            const assaraydistribuid = element.Distribuidor.split('-')
+            const name = assaraydistribuid[0] + ' - ' + element.Nombre
+            const store = new Shop({
+              name:name,
+              country:element.pais,
+              state:element.Estado,
+              city:element.Municipio,
+              suburb: element.colonia,
+              street: element.Calle,
+              num: element.numero,
+              phone: element.TelefonoTienda,
+              status: ((element.Latitud!='' && element.Longitud!='') && element.Nombre!='')?true:false,
+              lat: element.Latitud,
+              lng: element.Longitud,
+              dateCreated:new Date().toISOString().slice(0,10),
+            })
+            await store.save()
+            console.log("tienda guardada:"+ name)
           })
-          await store.save()
-          console.log("tienda guardada:"+ name)
-        })
+        }
       })
 
   }
