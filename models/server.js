@@ -88,7 +88,7 @@ class Server {
 
     listen(){
         this.app.listen(this.port,()=>{
-            console.log('actual version is: V0.9.9')
+            console.log('actual version is: V1.0.0')
             console.log("servidor corriendo en ",+this.port)
         })
     }
