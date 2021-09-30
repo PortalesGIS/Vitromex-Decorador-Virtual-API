@@ -7,7 +7,7 @@ const SerieSchema = Schema({
     },
     available:{
         type:Boolean,
-        default:true
+        default:false
     },
     img:{
         type: 'string',
