@@ -73,11 +73,20 @@ const getProductById = async(req,res = response) => {
 const changeStatusProduct = async(req,res = response) =>{
     const {id,available} = req.body
     const product = await Product.findById(id)
-    await product.updateOne({available})
-    verifyAndUploadStatusSerie(product,available)
-    res.json({
-        msg:"status cambio",
-    })
+    // console.log((available && product.smallPicture!=='' && product.albedo !=='' && product.normal !=='') || !available)
+    if((available && product.smallPicture!=='' && product.albedo !=='' && product.normal !=='') || !available ){
+        await product.updateOne({available})
+        verifyAndUploadStatusSerie(product,available)
+        res.json({
+            msg:"status cambio",
+        })
+    }
+    else{
+        res.status(404).json({
+            error:'el producto no esta completo para actiarlo'
+        })
+    }
+    
 }
 
 const verifyAndUploadStatusSerie = async(product,available)=>{
