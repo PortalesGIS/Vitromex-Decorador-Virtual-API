@@ -33,7 +33,7 @@ const login = async(req,res=response)=>{
             }
         })
     }
-    const consultingServiceClientAuthAdmin = async (url,email,password,callback)=>{
+const consultingServiceClientAuthAdmin = async (url,email,password,callback)=>{
         fetch(`${url}?Username=${email}&Password=${password}`,{
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

@@ -40,7 +40,7 @@ class Server {
         await dbConnection()
        // actualizar DB servicio de oracle
         getDB.start();
-        ActualizarDB();
+        // ActualizarDB();
     }
 
     middlewares(){
