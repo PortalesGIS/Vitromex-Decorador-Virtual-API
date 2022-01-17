@@ -40,7 +40,7 @@ class Server {
         await dbConnection()
        // actualizar DB servicio de oracle
         getDB.start();
-        // ActualizarDB();
+        ActualizarDB();
     }
 
     middlewares(){
@@ -71,7 +71,7 @@ class Server {
     }
 
     routes(){
-        console.log("routes")
+        console.log('\x1b[37m%s\x1b[0m',"routes")
         this.app.use(this.usersRoutePath, require("../routes/user"));
         this.app.use(this.productsPath, require("../routes/product"));
         this.app.use(this.authPath, require("../routes/auth"));
@@ -88,7 +88,7 @@ class Server {
 
     listen(){
         this.app.listen(this.port,()=>{
-            console.log('actual version is: V0.9.9')
+            console.log('actual version is: V1.0.1')
             console.log("servidor corriendo en ",+this.port)
         })
     }

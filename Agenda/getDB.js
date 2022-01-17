@@ -23,8 +23,8 @@ const getDB = cron.schedule('0 1 * * *', () => {
         })
         .then((res) =>res.json())
         .then(async(response)=>{
-          console.log(response)
-
+          if(response.result){
+            console.log(`productos obtenidos correctamente de ${process.env.GET_PRODUCTS}`)
             //   console.log(response.result.P_InfoProductos_RowSet)
             const productsOracle = filterDataNotDuplicate(response.result.P_InfoProductos_RowSet,"CODIGO_ITEM");
 
@@ -36,7 +36,6 @@ const getDB = cron.schedule('0 1 * * *', () => {
 
             const productOracleFormats = filterDataNotDuplicate(response.result.P_InfoProductos_RowSet,"FORMATO");
             await addFormats(productOracleFormats);
-
            await productsOracle.forEach(async (element) => {
               existProduct(element.CODIGO_ITEM, async (exist)=>{
                 if(!exist){
@@ -67,10 +66,14 @@ const getDB = cron.schedule('0 1 * * *', () => {
           }
               })
               });
+          }
+          else{
+            console.log('algo salio mal al actualizar la DB pero el servicio esta funcionando ok')
+          }
       }).catch(err =>console.log(err))
       console.log(`obteniendo tiendas de: ${process.env.GET_TIENDAS}`);
 
-       // TODO: aqui modificar hacia donde apunta el link para las tiendas 
+      // TODO: aqui modificar hacia donde apunta el link para las tiendas 
       // solo cambiar el link 
       fetch(`${process.env.GET_TIENDAS}`,{
         method: 'GET',
@@ -99,9 +102,17 @@ const getDB = cron.schedule('0 1 * * *', () => {
               dateCreated:new Date().toISOString().slice(0,10),
             })
             await store.save()
-            console.log("tienda guardada:"+ name)
+            console.log('\x1b[32m%s\x1b[0m',"tienda guardada:"+ name)
           })
         }
+        else{
+          console.log('\x1b[31m%s\x1b[0m', 'algo salio mal al actualizar la DB');
+          console.log('\x1b[32m%s\x1b[0m','pero el servicio esta funcionando ok')
+        }
+      })
+      .catch(error=>{
+        console.log('\x1b[31m%s\x1b[0m', `algo salio mal al actualizar la DB ${error}`);
+        console.log('\x1b[32m%s\x1b[0m','pero el servicio esta funcionando ok')
       })
 
   }
