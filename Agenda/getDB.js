@@ -79,7 +79,10 @@ const getDB = cron.schedule('0 1 * * *', () => {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
-      .then(res=>res.json())
+      .then(res=>{
+        console.log(res)
+        return res.json()
+      })
       .then(async(response)=>{
         const tiendas = response.data
         if(tiendas){

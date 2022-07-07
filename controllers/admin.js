@@ -2,6 +2,7 @@ const { response } = require("express");
 const Admin = require("../models/admin")
 const { genJWT } = require("../helpers/jwt");
 const fetch = require('node-fetch');
+const jwt = require('jsonwebtoken')
 
 const login = async(req,res=response)=>{
     const {email,password} = req.body;
@@ -91,9 +92,40 @@ const createAdmin = async (req,res=response)=>{
 
 }
 
+const checkAndRenewJwt = async (req,res=response) =>{
+    const token = req.header("key");
+    if(!token){
+        res.status(401).json({
+            error:"no hay token en la peticion"
+        })
+    }
+    try {
+        jwt.verify(token, process.env.SECRETKEY, async (error,decoded)=>{
+            if(error ){
+                if( error.name === "TokenExpiredError"){
+                    const newToken = await genJWT("0000");
+                    res.json({
+                        newToken,
+                        isNewToken:true
+                    })
+                }
+                else{
+                    res.json({error:true})
+                }
+            }
+            else{
+                res.json({isNewToken:false})
+            }
+        });
+    } catch (error) {
+        res.json({error:true})
+    }
+}
+
 module.exports={
     login,
     getAllAdmins,
+    checkAndRenewJwt,
     deleteAdmin,
     createAdmin
 }

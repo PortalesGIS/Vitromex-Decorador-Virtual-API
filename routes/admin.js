@@ -1,7 +1,8 @@
 
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { login, getAllAdmins, createAdmin, deleteAdmin } = require('../controllers/admin');
+const { response } = require("express");
+const { login, getAllAdmins, createAdmin, deleteAdmin, checkAndRenewJwt } = require('../controllers/admin');
 const {validateCampos} = require('../middlewares/validateCampos');
 const { validateJwt } = require("../middlewares/validateJwt");
 
@@ -20,6 +21,9 @@ router.post("/create",[
     check("email","Es necesario un email").not().isEmpty(),          
     validateCampos
 ],createAdmin)
+
+router.post("/validatejwt",[
+],checkAndRenewJwt)
 
 router.delete("/delete",[
     validateJwt,
